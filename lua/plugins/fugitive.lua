@@ -9,6 +9,7 @@ return {
     keymap.set("n", "<leader>gs",
       ":Git<CR>",
       { desc = "Git status" })
+
     keymap.set("n", "<leader>gc",
       ":Git commit<CR>",
       { desc = "Git commit" })
