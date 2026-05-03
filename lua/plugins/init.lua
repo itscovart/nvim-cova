@@ -1,0 +1,26 @@
+return require("lazy").setup({
+
+  require("plugins.theme"),
+
+  require("plugins.telescope"),
+
+  require("plugins.harpoon"),
+
+  require("plugins.treesitter"),
+
+  require("plugins.lsp"),
+
+  require("plugins.gitsigns"),
+
+  require("plugins.fugitive"),
+
+  require("plugins.conform"),
+
+  require("plugins.toggleterm"),
+
+  require("plugins.flash"),
+
+  require("plugins.lualine"),
+
+  require("plugins.multicursor"),
+})
