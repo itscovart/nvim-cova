@@ -27,7 +27,7 @@ keymap.set("v", "<leader>y", '"+y')
 -- Clear search highlight
 -------------------------------------------------
 
-keymap.set("n", "<leader>h", ":nohlsearch<CR>")
+keymap.set("n", "<leader>nh", ":nohlsearch<CR>")
 
 -------------------------------------------------
 -- Resize windows
