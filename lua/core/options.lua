@@ -85,3 +85,9 @@ opt.updatetime = 250
 
 opt.timeoutlen = 300
 
+-------------------------------------------------
+-- NETRW
+-------------------------------------------------
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

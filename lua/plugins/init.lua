@@ -23,4 +23,6 @@ return require("lazy").setup({
   require("plugins.lualine"),
 
   require("plugins.multicursor"),
+
+  require("plugins.dashboard"),
 })
