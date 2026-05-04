@@ -83,7 +83,8 @@ opt.updatetime = 250
 -- Timeout
 -------------------------------------------------
 
-opt.timeoutlen = 300
+vim.o.timeout = true
+vim.o.timeoutlen = 500
 
 -------------------------------------------------
 -- NETRW
