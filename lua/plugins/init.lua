@@ -25,4 +25,6 @@ return require("lazy").setup({
   require("plugins.multicursor"),
 
   require("plugins.dashboard"),
+
+  require("plugins.oil"),
 })
