@@ -97,12 +97,12 @@ Ctrl + l → right
 ### Harpoon
 ```
 <leader>a → Add file  
-<leader>1-4 → Navigate between marked files  
+<leader>1-8 → Navigate between marked files  
 ```
 
 ### Git
 ```
-<leader>gl → Git actions  
+<leader>gs → Git actions  
 ```
 
 ---
@@ -116,14 +116,24 @@ nvim/
 │   ├── core/
 │   │   ├── options.lua
 │   │   ├── keymaps.lua
+│   │   ├── system.lua
 │   │   └── autocmds.lua
 │   ├── plugins/
+│   │   ├── init.lua
+│   │   ├── theme.lua
 │   │   ├── telescope.lua
-│   │   ├── lsp.lua
 │   │   ├── harpoon.lua
+│   │   ├── treesitter.lua
+│   │   ├── lsp.lua
 │   │   ├── gitsigns.lua
+│   │   ├── fugitive.lua
+│   │   ├── conform.lua
+│   │   ├── toggleterm.lua
+│   │   ├── flash.lua
+│   │   ├── lualine.lua
+│   │   ├── multicursor.lua
+│   │   ├── oil.lua
 │   │   └── dashboard.lua
-│   └── config/
 ```
 
 ---
@@ -132,7 +142,7 @@ nvim/
 
 ### 1. Clone the repository
 ```
-git clone https://github.com/your-username/nvim-config ~/.config/nvim
+git clone https://github.com/itscovart/nvim-cova ~/.config/nvim
 ```
 
 ### 2. Launch Neovim
@@ -150,6 +160,7 @@ Plugins will be installed automatically via the configured plugin manager.
 - Neovim ≥ 0.9  
 - Git  
 - Node.js (for some LSPs)  
+- gcc-15/g++-15 (for c/c++ programs)
 - ripgrep (for Telescope)  
 - Cargo (for Rust development)  
 
@@ -159,8 +170,7 @@ Plugins will be installed automatically via the configured plugin manager.
 
 - Rust 🦀  
 - C / C++  
-- JavaScript / TypeScript  
-- Python (optional)  
+- Python 
 
 ---
 
