@@ -64,6 +64,22 @@ return {
 
     vim.lsp.enable("pyright")
 
+    -------------------------------------------------
+    -- Rust
+    -------------------------------------------------
+
+    vim.lsp.config("rust_analyzer", {
+      settings = {
+        ["rust-analyzer"] = {
+          cargo = {
+            allFeatures = true,
+          },
+          checkOnSave = true,
+        },
+      },
+    })
+    vim.lsp.enable("rust_analyzer")
+
   end,
 }
 
