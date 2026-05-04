@@ -235,3 +235,12 @@ vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv")
 
 vim.keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi")
 vim.keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi")
+
+--------------------------------------------------
+-- Go NVIM Home Page
+--------------------------------------------------
+
+vim.keymap.set("n", "<leader>v", function()
+  vim.cmd("enew")
+  vim.cmd("Dashboard")
+end, { desc = "Go to dashboard" })
