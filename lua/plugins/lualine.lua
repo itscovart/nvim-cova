@@ -5,19 +5,26 @@ end
 
 return {
 	"nvim-lualine/lualine.nvim",
+
 	config = function()
+		vim.opt.fillchars = { eob = " " }
+
 		local mode = {
 			"mode",
 			fmt = function(str)
-				return "-> " .. str
-				-- return ' ' .. str:sub(1, 1) -- displays only the first character of the mode
+				return " " .. str
 			end,
 		}
 
 		local filename = {
 			"filename",
-			file_status = true, -- displays file status (readonly status, modified status)
-			path = 1,  -- 0 = just filename, 1 = relative path, 2 = absolute path
+			file_status = true,
+			path = 1, -- 0 = filename, 1 = relative, 2 = absolute
+			symbols = {
+				modified = "●",
+				readonly = "",
+				unnamed = "[No Name]",
+			},
 		}
 
 		local hide_in_width = function()
@@ -27,9 +34,14 @@ return {
 		local diagnostics = {
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
-			sections = { "error", "warn" },
-			symbols = { error = "ER ", warn = "WA ", info = "IN ", hint = "Hi" },
-			colored = false,
+			sections = { "error", "warn", "info", "hint" },
+			symbols = {
+				error = " ",
+				warn = " ",
+				info = " ",
+				hint = "󰌵 ",
+			},
+			colored = true,
 			update_in_insert = false,
 			always_visible = false,
 			cond = hide_in_width,
@@ -37,87 +49,151 @@ return {
 
 		local diff = {
 			"diff",
-			colored = false,
-			symbols = { added = "AD ", modified = "MO ", removed = "RE " }, -- changes diff symbols
+			colored = true,
+			symbols = {
+				added = " ",
+				modified = " ",
+				removed = " ",
+			},
 			cond = hide_in_width,
 		}
 
 		require("lualine").setup({
 			options = {
 				icons_enabled = true,
-        theme = {
-          normal = {
-            a = { fg = "#ffffff", bg = "#000000" },
-            b = { fg = "#ffffff", bg = "#000000" },
-            c = { fg = "#ffffff", bg = "#000000" },
-          },
-          insert = {
-            a = { fg = "#ffffff", bg = "#000000" },
-          },
-          visual = {
-            a = { fg = "#ffffff", bg = "#000000" },
-          },
-          replace = {
-            a = { fg = "#ffffff", bg = "#000000" },
-          },
-          inactive = {
-            a = { fg = "#888888", bg = "#000000" },
-            b = { fg = "#888888", bg = "#000000" },
-            c = { fg = "#888888", bg = "#000000" },
-          },
-        },
-				-- Some useful glyphs:
-				-- https://www.nerdfonts.com/cheat-sheet
-				--        
-				section_separators = { left = "|", right = "|" },
-				component_separators = { left = "|", right = "|" },
-				disabled_filetypes = { "alpha", "neo-tree" },
+
+				theme = {
+					normal = {
+						a = { fg = "#7aa2f7", bg = "NONE", gui = "bold" },
+						b = { fg = "#c0caf5", bg = "NONE" },
+						c = { fg = "#a9b1d6", bg = "NONE" },
+					},
+
+					insert = {
+						a = { fg = "#9ece6a", bg = "NONE", gui = "bold" },
+					},
+
+					visual = {
+						a = { fg = "#bb9af7", bg = "NONE", gui = "bold" },
+					},
+
+					replace = {
+						a = { fg = "#f7768e", bg = "NONE", gui = "bold" },
+					},
+
+					command = {
+						a = { fg = "#e0af68", bg = "NONE", gui = "bold" },
+					},
+
+					inactive = {
+						a = { fg = "#565f89", bg = "NONE" },
+						b = { fg = "#565f89", bg = "NONE" },
+						c = { fg = "#565f89", bg = "NONE" },
+					},
+				},
+
+				section_separators = {
+					left = "",
+					right = "",
+				},
+
+				component_separators = {
+					left = "│",
+					right = "│",
+				},
+
+				disabled_filetypes = {
+					"alpha",
+					"dashboard",
+					"neo-tree",
+				},
+
 				always_divide_middle = true,
+				globalstatus = true,
 			},
+
 			sections = {
 				lualine_a = { mode },
-				lualine_b = { "branch" },
+
+				lualine_b = {
+					{
+						"branch",
+						icon = "",
+					},
+				},
+
 				lualine_c = { filename },
+
 				lualine_x = {
-          diagnostics,
-          diff,
+					diagnostics,
+					diff,
 
-          {
-            function()
-              return sys.cpu():gsub("%%", "%%%%")
-            end,
-          },
+					{
+						function()
+							if ok_sys then
+								return " " .. sys.cpu():gsub("%%", "%%%%")
+							end
+							return ""
+						end,
+					},
 
-          {
-            function()
-              return sys.ram():gsub("%%", "%%%%")
-            end,
-          },
+					{
+						function()
+							if ok_sys then
+								return "󰍛 " .. sys.ram():gsub("%%", "%%%%")
+							end
+							return ""
+						end,
+					},
+				},
 
-        },
 				lualine_y = {
-          "location",
+					{
+						"location",
+						icon = "󰍉",
+					},
 
-          {
-            function()
-              return os.date("%H:%M")
-            end,
-          },
+					{
+						function()
+							return " " .. os.date("%H:%M")
+						end,
+					},
+				},
 
-        },
+				lualine_z = {
+					{
+						"progress",
+						icon = "󰦨",
+					},
+				},
+			},
 
-        lualine_z = { "progress" },			
-      },
 			inactive_sections = {
 				lualine_a = {},
 				lualine_b = {},
-				lualine_c = { { "filename", path = 1 } },
-				lualine_x = { { "location", padding = 0 } },
+				lualine_c = {
+					{
+						"filename",
+						path = 1,
+					},
+				},
+				lualine_x = {
+					{
+						"location",
+						padding = 0,
+					},
+				},
 				lualine_y = {},
 				lualine_z = {},
 			},
+
 			tabline = {},
-			extensions = { "fugitive" },
+
+			extensions = {
+				"fugitive",
+				"neo-tree",
+				"lazy",
+			},
 		})
 	end,
 }
