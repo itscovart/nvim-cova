@@ -27,4 +27,6 @@ return require("lazy").setup({
   require("plugins.dashboard"),
 
   require("plugins.oil"),
+
+  require("plugins.todo-comments"),
 })

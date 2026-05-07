@@ -71,7 +71,7 @@ opt.termguicolors = true
 -- Sign column
 -------------------------------------------------
 
-opt.signcolumn = "yes"
+opt.signcolumn = "yes:1"
 
 -------------------------------------------------
 -- Update time
