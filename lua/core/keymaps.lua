@@ -172,16 +172,16 @@ keymap.set("n", "<leader>pdfmd", function()
   local output_pdf = vim.fn.expand("%:t:r") .. ".pdf"
 
   local cmd =
-    "cd " .. file_dir .. " && " ..
-    "pandoc "
-    .. input_file .. " "
-    .. "-o " .. output_pdf .. " "
-    .. "--template=" .. template .. " "
-    .. "--pdf-engine=xelatex "
-    .. "--syntax-highlighting=idiomatic "
-    .. "--resource-path=."
+    'cd "' .. file_dir .. '" && ' ..
+    'pandoc "' .. input_file .. '" ' ..
+    '-o "' .. output_pdf .. '" ' ..
+    '--template="' .. template .. '" ' ..
+    '--pdf-engine=xelatex ' ..
+    '--highlight-style=github ' ..
+    '--resource-path=. ' ..
+    '&& open "' .. output_pdf .. '"'
 
-  vim.cmd("!" .. cmd)
+  vim.fn.system(cmd)
 
 end, { desc = "Markdown to PDF" })
 
