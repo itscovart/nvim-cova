@@ -29,4 +29,6 @@ return require("lazy").setup({
   require("plugins.oil"),
 
   require("plugins.todo-comments"),
+
+  require("plugins.mini-indentscope"),
 })
