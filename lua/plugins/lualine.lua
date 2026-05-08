@@ -1,4 +1,5 @@
 local ok_sys, sys = pcall(require, "core.system")
+
 if ok_sys and sys.setup then
 	sys.setup({ interval_ms = 1500 })
 end
@@ -7,10 +8,20 @@ return {
 	"nvim-lualine/lualine.nvim",
 
 	config = function()
+
+		-------------------------------------------------
+		-- Cleaner end of buffer
+		-------------------------------------------------
+
 		vim.opt.fillchars = { eob = " " }
+
+		-------------------------------------------------
+		-- Components
+		-------------------------------------------------
 
 		local mode = {
 			"mode",
+
 			fmt = function(str)
 				return " " .. str
 			end,
@@ -18,8 +29,11 @@ return {
 
 		local filename = {
 			"filename",
+
 			file_status = true,
-			path = 1, -- 0 = filename, 1 = relative, 2 = absolute
+
+			path = 1,
+
 			symbols = {
 				modified = "●",
 				readonly = "",
@@ -33,74 +47,185 @@ return {
 
 		local diagnostics = {
 			"diagnostics",
+
 			sources = { "nvim_diagnostic" },
-			sections = { "error", "warn", "info", "hint" },
+
+			sections = {
+				"error",
+				"warn",
+				"info",
+				"hint",
+			},
+
 			symbols = {
 				error = " ",
 				warn = " ",
 				info = " ",
 				hint = "󰌵 ",
 			},
+
 			colored = true,
 			update_in_insert = false,
 			always_visible = false,
+
 			cond = hide_in_width,
 		}
 
 		local diff = {
 			"diff",
+
 			colored = true,
+
 			symbols = {
 				added = " ",
 				modified = " ",
 				removed = " ",
 			},
+
 			cond = hide_in_width,
 		}
 
+		-------------------------------------------------
+		-- Setup
+		-------------------------------------------------
+
 		require("lualine").setup({
+
 			options = {
+
 				icons_enabled = true,
 
+				-------------------------------------------------
+				-- 🌸 Sakura pastel transparent theme
+				-------------------------------------------------
+
 				theme = {
+
 					normal = {
-						a = { fg = "#7aa2f7", bg = "NONE", gui = "bold" },
-						b = { fg = "#c0caf5", bg = "NONE" },
-						c = { fg = "#a9b1d6", bg = "NONE" },
+						a = {
+							fg = "#f2b5d4",
+							bg = "NONE",
+							gui = "bold",
+						},
+
+						b = {
+							fg = "#ddc7a1",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#bdae93",
+							bg = "NONE",
+						},
 					},
 
 					insert = {
-						a = { fg = "#9ece6a", bg = "NONE", gui = "bold" },
+						a = {
+							fg = "#a6d189",
+							bg = "NONE",
+							gui = "bold",
+						},
+
+						b = {
+							fg = "#ddc7a1",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#bdae93",
+							bg = "NONE",
+						},
 					},
 
 					visual = {
-						a = { fg = "#bb9af7", bg = "NONE", gui = "bold" },
+						a = {
+							fg = "#cba6f7",
+							bg = "NONE",
+							gui = "bold",
+						},
+
+						b = {
+							fg = "#ddc7a1",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#bdae93",
+							bg = "NONE",
+						},
 					},
 
 					replace = {
-						a = { fg = "#f7768e", bg = "NONE", gui = "bold" },
+						a = {
+							fg = "#ea999c",
+							bg = "NONE",
+							gui = "bold",
+						},
+
+						b = {
+							fg = "#ddc7a1",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#bdae93",
+							bg = "NONE",
+						},
 					},
 
 					command = {
-						a = { fg = "#e0af68", bg = "NONE", gui = "bold" },
+						a = {
+							fg = "#f9e2af",
+							bg = "NONE",
+							gui = "bold",
+						},
+
+						b = {
+							fg = "#ddc7a1",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#bdae93",
+							bg = "NONE",
+						},
 					},
 
 					inactive = {
-						a = { fg = "#565f89", bg = "NONE" },
-						b = { fg = "#565f89", bg = "NONE" },
-						c = { fg = "#565f89", bg = "NONE" },
+						a = {
+							fg = "#7c6f64",
+							bg = "NONE",
+						},
+
+						b = {
+							fg = "#7c6f64",
+							bg = "NONE",
+						},
+
+						c = {
+							fg = "#7c6f64",
+							bg = "NONE",
+						},
 					},
 				},
 
+				-------------------------------------------------
+				-- Minimal separators
+				-------------------------------------------------
+
 				section_separators = {
-					left = "",
-					right = "",
+					left = "",
+					right = "",
 				},
 
 				component_separators = {
 					left = "│",
 					right = "│",
 				},
+
+				-------------------------------------------------
+				-- Disable on these
+				-------------------------------------------------
 
 				disabled_filetypes = {
 					"alpha",
@@ -112,8 +237,15 @@ return {
 				globalstatus = true,
 			},
 
+			-------------------------------------------------
+			-- Active sections
+			-------------------------------------------------
+
 			sections = {
-				lualine_a = { mode },
+
+				lualine_a = {
+					mode,
+				},
 
 				lualine_b = {
 					{
@@ -122,32 +254,60 @@ return {
 					},
 				},
 
-				lualine_c = { filename },
+				lualine_c = {
+					filename,
+				},
 
 				lualine_x = {
+
 					diagnostics,
 					diff,
 
-					{
-						function()
-							if ok_sys then
-								return " " .. sys.cpu():gsub("%%", "%%%%")
-							end
-							return ""
-						end,
-					},
+					-------------------------------------------------
+					-- CPU
+					-------------------------------------------------
 
 					{
 						function()
+
 							if ok_sys then
-								return "󰍛 " .. sys.ram():gsub("%%", "%%%%")
+								return " " ..
+									sys.cpu():gsub("%%", "%%%%")
 							end
+
 							return ""
+
 						end,
+
+						color = {
+							fg = "#f2b5d4",
+						},
+					},
+
+					-------------------------------------------------
+					-- RAM
+					-------------------------------------------------
+
+					{
+						function()
+
+							if ok_sys then
+								return "󰍛 " ..
+									sys.ram():gsub("%%", "%%%%")
+							end
+
+							return ""
+
+						end,
+
+						color = {
+							fg = "#ddb6f2",
+						},
 					},
 				},
 
 				lualine_y = {
+
 					{
 						"location",
 						icon = "󰍉",
@@ -155,12 +315,14 @@ return {
 
 					{
 						function()
-							return " " .. os.date("%H:%M")
+							return " " ..
+								os.date("%H:%M")
 						end,
 					},
 				},
 
 				lualine_z = {
+
 					{
 						"progress",
 						icon = "󰦨",
@@ -168,24 +330,36 @@ return {
 				},
 			},
 
+			-------------------------------------------------
+			-- Inactive sections
+			-------------------------------------------------
+
 			inactive_sections = {
+
 				lualine_a = {},
 				lualine_b = {},
+
 				lualine_c = {
 					{
 						"filename",
 						path = 1,
 					},
 				},
+
 				lualine_x = {
 					{
 						"location",
 						padding = 0,
 					},
 				},
+
 				lualine_y = {},
 				lualine_z = {},
 			},
+
+			-------------------------------------------------
+			-- Extensions
+			-------------------------------------------------
 
 			tabline = {},
 
@@ -195,5 +369,13 @@ return {
 				"lazy",
 			},
 		})
+    -------------------------------------------------
+    -- Transparent statusline
+    -------------------------------------------------
+
+    vim.cmd([[
+      highlight StatusLine guibg=NONE
+      highlight StatusLineNC guibg=NONE
+    ]])
 	end,
 }
