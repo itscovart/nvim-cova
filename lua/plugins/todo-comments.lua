@@ -1,6 +1,8 @@
 return {
   "folke/todo-comments.nvim",
 
+  event = "VeryLazy",
+
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
@@ -8,58 +10,98 @@ return {
   opts = {
     signs = true,
 
-    highlight = {
-      before = "",
-      keyword = "wide",
-      after = "",
-    },
+    sign_priority = 8,
 
     keywords = {
       TODO = {
-        icon = "",
+        icon = " ",
         color = "info",
+        alt = { "TODO" },
       },
 
       FIXME = {
-        icon = "",
+        icon = " ",
         color = "error",
+        alt = { "FIX", "BUG", "FIXIT", "ISSUE" },
       },
 
       HACK = {
-        icon = "",
+        icon = " ",
         color = "warning",
       },
 
       WARN = {
-        icon = "",
+        icon = " ",
         color = "warning",
-      },
-
-      NOTE = {
-        icon = "",
-        color = "hint",
+        alt = { "WARNING", "XXX" },
       },
 
       PERF = {
-        icon = "",
+        icon = " ",
         color = "default",
+        alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" },
       },
+
+      NOTE = {
+        icon = " ",
+        color = "hint",
+        alt = { "INFO" },
+      },
+    },
+
+    gui_style = {
+      fg = "NONE",
+      bg = "BOLD",
+    },
+
+    highlight = {
+      multiline = true,
+      multiline_pattern = "^.",
+      multiline_context = 10,
+
+      before = "",
+
+      keyword = "bg",
+
+      after = "fg",
+      pattern = [[.*<(KEYWORDS)\s*:]],
+
+      comments_only = true,
+
+      max_line_len = 400,
+      exclude = {},
+    },
+
+    colors = {
+      error = { "#f7768e" },
+      warning = { "#e0af68" },
+      info = { "#7aa2f7" },
+      hint = { "#7dcfff" },
+      default = { "#9ece6a" },
+    },
+
+    search = {
+      command = "rg",
+
+      args = {
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+      },
+
+      pattern = [[\b(KEYWORDS):]],
     },
   },
 
   keys = {
     {
-      "<leader>st",
-      "<cmd>TodoTelescope<cr>",
-      desc = "Search TODOs",
-    },
-
-    {
       "]t",
       function()
         require("todo-comments").jump_next()
       end,
-      desc = "Next TODO",
+      desc = "Next todo comment",
     },
 
     {
@@ -67,7 +109,19 @@ return {
       function()
         require("todo-comments").jump_prev()
       end,
-      desc = "Previous TODO",
+      desc = "Previous todo comment",
+    },
+
+    {
+      "<leader>st",
+      "<cmd>TodoTelescope<cr>",
+      desc = "Todo Telescope",
+    },
+
+    {
+      "<leader>sq",
+      "<cmd>TodoQuickFix<cr>",
+      desc = "Todo QuickFix",
     },
   },
 }
