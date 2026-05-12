@@ -177,11 +177,10 @@ keymap.set("n", "<leader>pdfmd", function()
     '-o "' .. output_pdf .. '" ' ..
     '--template="' .. template .. '" ' ..
     '--pdf-engine=xelatex ' ..
-    '--highlight-style=github ' ..
-    '--resource-path=. ' ..
-    '&& open "' .. output_pdf .. '"'
+    '--syntax-highlighting=none ' ..
+    '--resource-path=. '
 
-  vim.fn.system(cmd)
+  vim.cmd("!" .. cmd)
 
 end, { desc = "Markdown to PDF" })
 
