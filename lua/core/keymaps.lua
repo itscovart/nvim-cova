@@ -156,10 +156,34 @@ end, {})
 keymap.set("n", "<leader>mp", ":MdPreview<CR>", { desc = "Markdown Preview" })
 
 -------------------------------------------------
--- Markdown → PDF
+-- Markdown Template
 -------------------------------------------------
 
-keymap.set("n", "<leader>pdfmd", function()
+keymap.set("n", "<leader>tmd", function()
+
+  local template =
+
+    vim.fn.expand("~/.config/nvim/templates/md.md")
+
+  if vim.fn.filereadable(template) == 1 then
+
+    vim.fn.setline(
+
+      1,
+
+      vim.fn.readfile(template)
+
+    )
+
+  end
+
+end, { desc = "Insert Markdown Template" })
+
+-------------------------------------------------
+-- Markdown + LateX → PDF
+-------------------------------------------------
+
+keymap.set("n", "<leader>tarpdf", function()
 
   vim.cmd("write")
 
@@ -183,6 +207,29 @@ keymap.set("n", "<leader>pdfmd", function()
   vim.cmd("!" .. cmd)
 
 end, { desc = "Markdown to PDF" })
+
+-------------------------------------------------
+-- Markdown → PDF
+-------------------------------------------------
+
+keymap.set("n", "<leader>npdf", function()
+
+  vim.cmd("write")
+
+  local input_file = vim.fn.expand("%:t")
+  local file_dir = vim.fn.expand("%:p:h")
+  local output_pdf = vim.fn.expand("%:t:r") .. ".pdf"
+
+  local cmd =
+    'cd "' .. file_dir .. '" && ' ..
+    'pandoc "' .. input_file .. '" ' ..
+    '-o "' .. output_pdf .. '" ' ..
+    '--pdf-engine=xelatex ' ..
+    '--resource-path=. '
+
+  vim.cmd("!" .. cmd)
+
+end, { desc = "Simple Markdown to PDF" })
 
 -------------------------------------------------
 -- Templates
