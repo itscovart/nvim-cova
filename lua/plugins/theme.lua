@@ -1,33 +1,105 @@
+local colors = require("core.colors")
+
 return {
 
   -------------------------------------------------
-  -- GRUVBOX MATERIAL
+  -- KANAGAWA
   -------------------------------------------------
   {
-    "sainnhe/gruvbox-material",
+    "rebelot/kanagawa.nvim",
     priority = 1000,
 
     config = function()
 
       -------------------------------------------------
-      -- GRUVBOX SETTINGS
+      -- Kanagawa setup
       -------------------------------------------------
 
-      -- estilo del tema
-      vim.g.gruvbox_material_background = "medium"
+      require("kanagawa").setup({
 
-      -- transparencia
-      vim.g.gruvbox_material_transparent_background = 1
+        -------------------------------------------------
+        -- Theme style
+        -------------------------------------------------
 
-      -- mejor contraste
-      vim.g.gruvbox_material_enable_bold = 1
-      vim.g.gruvbox_material_enable_italic = 1
+        theme = "wave",
+
+        -------------------------------------------------
+        -- Transparency
+        -------------------------------------------------
+
+        transparent = true,
+
+        -------------------------------------------------
+        -- Cleaner gutters
+        -------------------------------------------------
+
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = "none",
+              },
+            },
+          },
+        },
+
+        -------------------------------------------------
+        -- Custom highlights
+        -------------------------------------------------
+
+        overrides = function()
+
+          return {
+
+            -------------------------------------------------
+            -- Cursor line
+            -------------------------------------------------
+
+            CursorLine = {
+              bg = "NONE",
+            },
+
+            -------------------------------------------------
+            -- Line numbers
+            -------------------------------------------------
+
+            LineNr = {
+              fg = colors.muted,
+            },
+
+            CursorLineNr = {
+              fg = colors.primary,
+              bold = true,
+            },
+
+            -------------------------------------------------
+            -- Float borders
+            -------------------------------------------------
+
+            FloatBorder = {
+              fg = colors.secondary,
+              bg = "NONE",
+            },
+
+            -------------------------------------------------
+            -- Normal floats
+            -------------------------------------------------
+
+            NormalFloat = {
+              bg = "NONE",
+            },
+
+          }
+
+        end,
+
+      })
 
       -------------------------------------------------
-      -- LOAD THEME
+      -- Load theme
       -------------------------------------------------
 
-      vim.cmd.colorscheme("gruvbox-material")
+      vim.cmd.colorscheme("kanagawa")
 
     end,
   },

@@ -1,3 +1,5 @@
+local colors = require("core.colors")
+
 return {
   "folke/todo-comments.nvim",
 
@@ -8,11 +10,21 @@ return {
   },
 
   opts = {
+
+    -------------------------------------------------
+    -- Signs
+    -------------------------------------------------
+
     signs = true,
 
     sign_priority = 8,
 
+    -------------------------------------------------
+    -- Keywords
+    -------------------------------------------------
+
     keywords = {
+
       TODO = {
         icon = " ",
         color = "info",
@@ -22,7 +34,12 @@ return {
       FIXME = {
         icon = " ",
         color = "error",
-        alt = { "FIX", "BUG", "FIXIT", "ISSUE" },
+        alt = {
+          "FIX",
+          "BUG",
+          "FIXIT",
+          "ISSUE",
+        },
       },
 
       HACK = {
@@ -33,30 +50,53 @@ return {
       WARN = {
         icon = " ",
         color = "warning",
-        alt = { "WARNING", "XXX" },
+
+        alt = {
+          "WARNING",
+          "XXX",
+        },
       },
 
       PERF = {
         icon = " ",
         color = "default",
-        alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" },
+
+        alt = {
+          "OPTIM",
+          "PERFORMANCE",
+          "OPTIMIZE",
+        },
       },
 
       NOTE = {
         icon = " ",
         color = "hint",
-        alt = { "INFO" },
+
+        alt = {
+          "INFO",
+        },
       },
     },
+
+    -------------------------------------------------
+    -- Style
+    -------------------------------------------------
 
     gui_style = {
       fg = "NONE",
       bg = "BOLD",
     },
 
+    -------------------------------------------------
+    -- Highlight
+    -------------------------------------------------
+
     highlight = {
+
       multiline = true,
+
       multiline_pattern = "^.",
+
       multiline_context = 10,
 
       before = "",
@@ -64,23 +104,49 @@ return {
       keyword = "bg",
 
       after = "fg",
+
       pattern = [[.*<(KEYWORDS)\s*:]],
 
       comments_only = true,
 
       max_line_len = 400,
+
       exclude = {},
     },
 
+    -------------------------------------------------
+    -- Colors
+    -------------------------------------------------
+
     colors = {
-      error = { "#f7768e" },
-      warning = { "#e0af68" },
-      info = { "#7aa2f7" },
-      hint = { "#7dcfff" },
-      default = { "#9ece6a" },
+
+      error = {
+        colors.danger,
+      },
+
+      warning = {
+        colors.warning,
+      },
+
+      info = {
+        colors.primary,
+      },
+
+      hint = {
+        colors.accent,
+      },
+
+      default = {
+        colors.success,
+      },
     },
 
+    -------------------------------------------------
+    -- Search
+    -------------------------------------------------
+
     search = {
+
       command = "rg",
 
       args = {
@@ -95,32 +161,43 @@ return {
     },
   },
 
+  -------------------------------------------------
+  -- Keymaps
+  -------------------------------------------------
+
   keys = {
+
     {
       "]t",
+
       function()
         require("todo-comments").jump_next()
       end,
+
       desc = "Next todo comment",
     },
 
     {
       "[t",
+
       function()
         require("todo-comments").jump_prev()
       end,
+
       desc = "Previous todo comment",
     },
 
     {
       "<leader>st",
       "<cmd>TodoTelescope<cr>",
+
       desc = "Todo Telescope",
     },
 
     {
       "<leader>sq",
       "<cmd>TodoQuickFix<cr>",
+
       desc = "Todo QuickFix",
     },
   },

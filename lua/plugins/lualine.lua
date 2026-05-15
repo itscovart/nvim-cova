@@ -1,3 +1,5 @@
+local colors = require("core.colors")
+
 local ok_sys, sys = pcall(require, "core.system")
 
 if ok_sys and sys.setup then
@@ -96,121 +98,121 @@ return {
 				icons_enabled = true,
 
 				-------------------------------------------------
-				-- 🌸 Sakura pastel transparent theme
+				-- Theme
 				-------------------------------------------------
 
 				theme = {
 
 					normal = {
 						a = {
-							fg = "#f2b5d4",
+							fg = colors.primary,
 							bg = "NONE",
 							gui = "bold",
 						},
 
 						b = {
-							fg = "#ddc7a1",
+							fg = colors.foreground,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#bdae93",
+							fg = colors.foreground_dark,
 							bg = "NONE",
 						},
 					},
 
 					insert = {
 						a = {
-							fg = "#a6d189",
+							fg = colors.success,
 							bg = "NONE",
 							gui = "bold",
 						},
 
 						b = {
-							fg = "#ddc7a1",
+							fg = colors.foreground,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#bdae93",
+							fg = colors.foreground_dark,
 							bg = "NONE",
 						},
 					},
 
 					visual = {
 						a = {
-							fg = "#cba6f7",
+							fg = colors.secondary,
 							bg = "NONE",
 							gui = "bold",
 						},
 
 						b = {
-							fg = "#ddc7a1",
+							fg = colors.foreground,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#bdae93",
+							fg = colors.foreground_dark,
 							bg = "NONE",
 						},
 					},
 
 					replace = {
 						a = {
-							fg = "#ea999c",
+							fg = colors.danger,
 							bg = "NONE",
 							gui = "bold",
 						},
 
 						b = {
-							fg = "#ddc7a1",
+							fg = colors.foreground,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#bdae93",
+							fg = colors.foreground_dark,
 							bg = "NONE",
 						},
 					},
 
 					command = {
 						a = {
-							fg = "#f9e2af",
+							fg = colors.warning,
 							bg = "NONE",
 							gui = "bold",
 						},
 
 						b = {
-							fg = "#ddc7a1",
+							fg = colors.foreground,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#bdae93",
+							fg = colors.foreground_dark,
 							bg = "NONE",
 						},
 					},
 
 					inactive = {
 						a = {
-							fg = "#7c6f64",
+							fg = colors.muted,
 							bg = "NONE",
 						},
 
 						b = {
-							fg = "#7c6f64",
+							fg = colors.muted,
 							bg = "NONE",
 						},
 
 						c = {
-							fg = "#7c6f64",
+							fg = colors.muted,
 							bg = "NONE",
 						},
 					},
 				},
 
 				-------------------------------------------------
-				-- Minimal separators
+				-- Separators
 				-------------------------------------------------
 
 				section_separators = {
@@ -224,7 +226,7 @@ return {
 				},
 
 				-------------------------------------------------
-				-- Disable on these
+				-- Disabled filetypes
 				-------------------------------------------------
 
 				disabled_filetypes = {
@@ -280,7 +282,7 @@ return {
 						end,
 
 						color = {
-							fg = "#f2b5d4",
+							fg = colors.primary,
 						},
 					},
 
@@ -301,7 +303,7 @@ return {
 						end,
 
 						color = {
-							fg = "#ddb6f2",
+							fg = colors.secondary,
 						},
 					},
 				},
@@ -369,13 +371,15 @@ return {
 				"lazy",
 			},
 		})
-    -------------------------------------------------
-    -- Transparent statusline
-    -------------------------------------------------
 
-    vim.cmd([[
-      highlight StatusLine guibg=NONE
-      highlight StatusLineNC guibg=NONE
-    ]])
+		-------------------------------------------------
+		-- Transparent statusline
+		-------------------------------------------------
+
+		vim.cmd([[
+			highlight StatusLine guibg=NONE
+			highlight StatusLineNC guibg=NONE
+		]])
+
 	end,
 }

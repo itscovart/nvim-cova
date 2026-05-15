@@ -1,5 +1,8 @@
+local colors = require("core.colors")
+
 return {
   "nvimdev/dashboard-nvim",
+
   event = "VimEnter",
 
   dependencies = {
@@ -11,6 +14,7 @@ return {
     local db = require("dashboard")
 
     db.setup({
+
       theme = "doom",
 
       config = {
@@ -101,15 +105,27 @@ return {
     })
 
     -------------------------------------------------
-    -- 🌸 SAKURA CYBERPUNK PALETTE
+    -- Dashboard highlights
     -------------------------------------------------
 
-    vim.cmd([[
-      highlight DashboardHeader guifg=#f2b5d4 gui=bold
-      highlight DashboardCenter guifg=#ddb6f2
-      highlight DashboardFooter guifg=#cba6f7 gui=italic
-      highlight DashboardShortCut guifg=#f5c2e7 gui=bold
-    ]])
+    vim.api.nvim_set_hl(0, "DashboardHeader", {
+      fg = colors.foreground_dark,
+      bold = true,
+    })
+
+    vim.api.nvim_set_hl(0, "DashboardCenter", {
+      fg = colors.primary,
+    })
+
+    vim.api.nvim_set_hl(0, "DashboardFooter", {
+      fg = colors.secondary,
+      italic = true,
+    })
+
+    vim.api.nvim_set_hl(0, "DashboardShortCut", {
+      fg = colors.accent,
+      bold = true,
+    })
 
   end,
 }
