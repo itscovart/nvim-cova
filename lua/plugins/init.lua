@@ -10,10 +10,6 @@ return require("lazy").setup({
 
   require("plugins.lsp"),
 
-  require("plugins.gitsigns"),
-
-  require("plugins.fugitive"),
-
   require("plugins.conform"),
 
   require("plugins.toggleterm"),
@@ -33,4 +29,9 @@ return require("lazy").setup({
   require("plugins.mini-indentscope"),
 
   require("plugins.nvimtree"),
+
+  require("plugins.jdtls"),
+
+  require("plugins.blink"),
+
 })

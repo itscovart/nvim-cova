@@ -285,9 +285,12 @@ end, { desc = "Go to dashboard" })
 -- NvimTree
 -------------------------------------------------
 
-vim.keymap.set(
-  "n",
-  "<leader>e",
-  "<cmd>NvimTreeToggle<CR>",
-  { desc = "Explorer" }
-)
+vim.keymap.set("n", "<leader>r", function()
+  local api = require("nvim-tree.api")
+
+  if api.tree.is_visible() then
+    api.tree.close()
+  else
+    api.tree.open()
+  end
+end, { desc = "Explorer" })

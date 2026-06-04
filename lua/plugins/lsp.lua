@@ -80,6 +80,74 @@ return {
     })
     vim.lsp.enable("rust_analyzer")
 
+    -------------------------------------------------
+    -- HTML
+    -------------------------------------------------
+
+    vim.lsp.config("html", {})
+    vim.lsp.enable("html")
+
+    -------------------------------------------------
+    -- CSS
+    -------------------------------------------------
+
+    vim.lsp.config("cssls", {})
+    vim.lsp.enable("cssls")
+
+    -------------------------------------------------
+    -- JSON
+    -------------------------------------------------
+
+    vim.lsp.config("jsonls", {})
+    vim.lsp.enable("jsonls")
+
+    -------------------------------------------------
+    -- JavaScript / TypeScript
+    -------------------------------------------------
+
+    vim.lsp.config("ts_ls", {
+      cmd = {
+        "typescript-language-server",
+        "--stdio",
+      },
+
+      init_options = {
+        hostInfo = "neovim",
+        tsserver = {
+          path = "/Users/itscovart/Library/pnpm/store/v11/links/@/typescript/5.9.3/86852851065618a77b8365a4daeb70e416bfcdbbe1c91f862babcda952119f61/node_modules/typescript/lib/tsserver.js",
+        },
+      },
+    })
+
+    vim.lsp.enable("ts_ls")
+    
+    -------------------------------------------------
+    -- SQL
+    -------------------------------------------------
+
+    vim.lsp.config("sqlls", {})
+    vim.lsp.enable("sqlls")
+
+    -------------------------------------------------
+    -- Emmet
+    -------------------------------------------------
+
+    vim.lsp.config("emmet_ls", {
+      cmd = {
+        "emmet-language-server",
+        "--stdio",
+      },
+      filetypes = {
+        "html",
+        "css",
+        "javascript",
+        "javascriptreact",
+        "typescriptreact",
+      },
+    })
+
+    vim.lsp.enable("emmet_ls")
+
   end,
 }
 

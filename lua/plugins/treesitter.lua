@@ -20,6 +20,13 @@ return {
         "c",
         "python",
         "lua",
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "tsx",
+        "json",
+        "sql",
       },
 
       highlight = {
