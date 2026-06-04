@@ -102,3 +102,7 @@ vim.o.timeoutlen = 500
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.opt.fillchars:append({
+  vert = "│",
+})
