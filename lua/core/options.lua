@@ -16,6 +16,16 @@ opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
+    vim.bo.softtabstop = 2
+    vim.bo.expandtab = true
+  end,
+})
+
 -------------------------------------------------
 -- Wrapping
 -------------------------------------------------

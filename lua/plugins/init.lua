@@ -31,4 +31,6 @@ return require("lazy").setup({
   require("plugins.todo-comments"),
 
   require("plugins.mini-indentscope"),
+
+  require("plugins.nvimtree"),
 })

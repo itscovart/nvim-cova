@@ -279,3 +279,15 @@ keymap.set("n", "<leader>v", function()
   vim.cmd("enew")
   vim.cmd("Dashboard")
 end, { desc = "Go to dashboard" })
+
+
+-------------------------------------------------
+-- NvimTree
+-------------------------------------------------
+
+vim.keymap.set(
+  "n",
+  "<leader>e",
+  "<cmd>NvimTreeToggle<CR>",
+  { desc = "Explorer" }
+)
