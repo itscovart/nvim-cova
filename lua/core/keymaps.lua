@@ -201,7 +201,6 @@ keymap.set("n", "<leader>tarpdf", function()
     '-o "' .. output_pdf .. '" ' ..
     '--template="' .. template .. '" ' ..
     '--pdf-engine=xelatex ' ..
-    '--syntax-highlighting=none ' ..
     '--resource-path=. '
 
   vim.cmd("!" .. cmd)
