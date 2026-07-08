@@ -24,3 +24,8 @@ vim.api.nvim_create_autocmd(
     command = "write",
   }
 )
+
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "FocusLost" }, {
+  pattern = "*",
+  command = "silent! write",
+})
