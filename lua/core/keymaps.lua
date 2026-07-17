@@ -1,253 +1,265 @@
-local keymap = vim.keymap
+local keymap = vim.keymap.set
+
+local opts = {
+  silent = true,
+  noremap = true,
+}
 
 -------------------------------------------------
 -- Better window navigation
 -------------------------------------------------
 
-keymap.set("n", "<C-h>", "<C-w>h")
-keymap.set("n", "<C-j>", "<C-w>j")
-keymap.set("n", "<C-k>", "<C-w>k")
-keymap.set("n", "<C-l>", "<C-w>l")
+keymap("n", "<C-h>", "<C-w>h", {
+  desc = "Move to left window",
+})
+
+keymap("n", "<C-j>", "<C-w>j", {
+  desc = "Move to lower window",
+})
+
+keymap("n", "<C-k>", "<C-w>k", {
+  desc = "Move to upper window",
+})
+
+keymap("n", "<C-l>", "<C-w>l", {
+  desc = "Move to right window",
+})
 
 -------------------------------------------------
 -- Save / Quit
 -------------------------------------------------
 
-keymap.set("n", "<leader>w", ":w<CR>")
-keymap.set("n", "<leader>q", ":q<CR>")
+keymap("n", "<leader>w", "<cmd>write<cr>", {
+  desc = "Save file",
+})
+
+keymap("n", "<leader>q", "<cmd>quit<cr>", {
+  desc = "Quit window",
+})
 
 -------------------------------------------------
--- Copy
+-- Copy to system clipboard
 -------------------------------------------------
 
-keymap.set("n", "<leader>y", '"+yy')
-keymap.set("v", "<leader>y", '"+y')
+keymap("n", "<leader>y", '"+yy', {
+  desc = "Copy line to clipboard",
+})
+
+keymap("v", "<leader>y", '"+y', {
+  desc = "Copy selection to clipboard",
+})
 
 -------------------------------------------------
 -- Clear search highlight
 -------------------------------------------------
 
-keymap.set("n", "<leader>nh", ":nohlsearch<CR>")
+keymap("n", "<leader>nh", "<cmd>nohlsearch<cr>", {
+  desc = "Clear search highlight",
+})
 
 -------------------------------------------------
 -- Resize windows
 -------------------------------------------------
 
-keymap.set("n", "<C-Up>", ":resize -2<CR>")
-keymap.set("n", "<C-Down>", ":resize +2<CR>")
-keymap.set("n", "<C-Left>", ":vertical resize -2<CR>")
-keymap.set("n", "<C-Right>", ":vertical resize +2<CR>")
+keymap("n", "<C-Up>", "<cmd>resize -2<cr>", {
+  desc = "Decrease window height",
+})
+
+keymap("n", "<C-Down>", "<cmd>resize +2<cr>", {
+  desc = "Increase window height",
+})
+
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<cr>", {
+  desc = "Decrease window width",
+})
+
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<cr>", {
+  desc = "Increase window width",
+})
 
 -------------------------------------------------
--- C++ (compile only)
+-- C++ compile
 -------------------------------------------------
 
-keymap.set("n", "<leader>cc", function()
-  local file = vim.fn.expand("%")
-  local output = vim.fn.expand("%:r")
-
-  vim.cmd("w")
-
-  vim.cmd("!" ..
-    "g++-15 -std=c++20 -Wall -Wextra " ..
-    file .. " -o " .. output
-  )
-end, { desc = "Compile C++" })
-
--------------------------------------------------
--- Smart Run (C++ / Rust)
--------------------------------------------------
-
-keymap.set("n", "<leader>r", function()
-  vim.cmd("w")
-
-  local file = vim.fn.expand("%:t")
-  local ext = vim.fn.expand("%:e")
-
-  -------------------------------------------------
-  -- 🦀 RUST
-  -------------------------------------------------
-  if ext == "rs" then
-    local Terminal = require("toggleterm.terminal").Terminal
-
-    local function get_cargo_root()
-      local current_dir = vim.fn.expand("%:p:h")
-      local cargo_root = vim.fn.findfile("Cargo.toml", current_dir .. ";")
-
-      if cargo_root == "" then
-        return nil
-      end
-
-      return vim.fn.fnamemodify(cargo_root, ":h")
-    end
-
-    local root = get_cargo_root()
-
-    if not root then
-      print("No se encontró Cargo.toml")
-      return
-    end
-
-    Terminal:new({
-      cmd = "cargo run; read",
-      dir = root,
-      hidden = true,
-    }):toggle()
-
+keymap("n", "<leader>cc", function()
+  if vim.bo.filetype ~= "cpp" then
+    vim.notify("This command is only available for C++ files", vim.log.levels.WARN)
     return
   end
 
-  -------------------------------------------------
-  -- ⚙️ C++
-  -------------------------------------------------
-  if ext == "cpp" or ext == "cc" or ext == "cxx" then
-    local output = vim.fn.expand("%:r")
+  vim.cmd("write")
 
-    local compile_cmd =
-      "g++-15 -std=c++20 -O2 "
-      .. file
-      .. " -o "
-      .. output
+  local file = vim.fn.shellescape(vim.fn.expand("%:p"))
+  local output = vim.fn.shellescape(vim.fn.expand("%:p:r"))
 
-    local result = vim.fn.system(compile_cmd)
+  local command = table.concat({
+    "g++-15",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    file,
+    "-o",
+    output,
+  }, " ")
 
-    if vim.v.shell_error ~= 0 then
-      print("Compilation failed")
+  vim.cmd("!" .. command)
+end, {
+  desc = "Compile C++",
+})
 
-      vim.cmd("ToggleTerm")
+-------------------------------------------------
+-- Smart Run
+-------------------------------------------------
 
-      vim.defer_fn(function()
-        vim.fn.chansend(
-          vim.b.terminal_job_id,
-          compile_cmd .. "\n"
-        )
-      end, 200)
-
-      return
-    end
-
-    vim.cmd("ToggleTerm")
-
-    vim.defer_fn(function()
-      vim.fn.chansend(
-        vim.b.terminal_job_id,
-        "./" .. output .. "\n"
-      )
-    end, 200)
-
-    return
-  end
-
-  -------------------------------------------------
-  -- ❌ Otros lenguajes
-  -------------------------------------------------
-  print("No run command for this file type")
-
-end, { desc = "Run current file/project" })
+keymap("n", "<leader>r", function()
+  require("core.runner").run()
+end, {
+  desc = "Run current file or project",
+})
 
 -------------------------------------------------
 -- Markdown Preview
 -------------------------------------------------
 
 vim.api.nvim_create_user_command("MdPreview", function()
-  vim.fn.system('open -a "Markdowny" "' .. vim.fn.expand("%:p") .. '"')
-end, {})
-
-keymap.set("n", "<leader>mp", ":MdPreview<CR>", { desc = "Markdown Preview" })
-
--------------------------------------------------
--- Markdown Template
--------------------------------------------------
-
-keymap.set("n", "<leader>tmd", function()
-
-  local template =
-
-    vim.fn.expand("~/.config/nvim/templates/md.md")
-
-  if vim.fn.filereadable(template) == 1 then
-
-    vim.fn.setline(
-
-      1,
-
-      vim.fn.readfile(template)
-
-    )
-
+  if vim.bo.filetype ~= "markdown" then
+    vim.notify("This command is only available for Markdown", vim.log.levels.WARN)
+    return
   end
 
-end, { desc = "Insert Markdown Template" })
+  local file = vim.fn.shellescape(vim.fn.expand("%:p"))
+  vim.fn.system('open -a "Markdowny" ' .. file)
+end, {
+  desc = "Open Markdown preview",
+})
+
+keymap("n", "<leader>mp", "<cmd>MdPreview<cr>", {
+  desc = "Preview Markdown",
+})
 
 -------------------------------------------------
--- Markdown + LateX → PDF
+-- Template helper
 -------------------------------------------------
 
-keymap.set("n", "<leader>tarpdf", function()
+local function insert_template(path, message)
+  local template = vim.fn.expand(path)
+
+  if vim.fn.filereadable(template) ~= 1 then
+    vim.notify("Template not found: " .. template, vim.log.levels.ERROR)
+    return
+  end
+
+  local lines = vim.fn.readfile(template)
+
+  vim.api.nvim_buf_set_lines(
+    0,
+    0,
+    -1,
+    false,
+    lines
+  )
+
+  vim.notify(message, vim.log.levels.INFO)
+end
+
+-------------------------------------------------
+-- Markdown template
+-------------------------------------------------
+
+keymap("n", "<leader>tmd", function()
+  insert_template(
+    "~/.config/nvim/templates/md.md",
+    "Markdown template inserted"
+  )
+end, {
+  desc = "Insert Markdown template",
+})
+
+-------------------------------------------------
+-- Markdown + LaTeX template → PDF
+-------------------------------------------------
+
+keymap("n", "<leader>tarpdf", function()
+  if vim.bo.filetype ~= "markdown" then
+    vim.notify("This command is only available for Markdown", vim.log.levels.WARN)
+    return
+  end
 
   vim.cmd("write")
 
-  local template =
-    os.getenv("HOME") ..
-    "/.config/nvim/templates/escom-template.tex"
+  local template = vim.fn.shellescape(
+    vim.fn.expand("~/.config/nvim/templates/escom-template.tex")
+  )
 
-  local input_file = vim.fn.expand("%:t")
-  local file_dir = vim.fn.expand("%:p:h")
-  local output_pdf = vim.fn.expand("%:t:r") .. ".pdf"
+  local input_file = vim.fn.shellescape(vim.fn.expand("%:t"))
+  local file_dir = vim.fn.shellescape(vim.fn.expand("%:p:h"))
+  local output_pdf = vim.fn.shellescape(vim.fn.expand("%:t:r") .. ".pdf")
 
-  local cmd =
-    'cd "' .. file_dir .. '" && ' ..
-    'pandoc "' .. input_file .. '" ' ..
-    '-o "' .. output_pdf .. '" ' ..
-    '--template="' .. template .. '" ' ..
-    '--pdf-engine=xelatex ' ..
-    '--resource-path=. '
+  local command = table.concat({
+    "cd",
+    file_dir,
+    "&&",
+    "pandoc",
+    input_file,
+    "-o",
+    output_pdf,
+    "--template=" .. template,
+    "--pdf-engine=xelatex",
+    "--resource-path=.",
+  }, " ")
 
-  vim.cmd("!" .. cmd)
-
-end, { desc = "Markdown to PDF" })
+  vim.cmd("!" .. command)
+end, {
+  desc = "Export Markdown to PDF with ESCOM template",
+})
 
 -------------------------------------------------
 -- Markdown → PDF
 -------------------------------------------------
 
-keymap.set("n", "<leader>npdf", function()
+keymap("n", "<leader>npdf", function()
+  if vim.bo.filetype ~= "markdown" then
+    vim.notify("This command is only available for Markdown", vim.log.levels.WARN)
+    return
+  end
 
   vim.cmd("write")
 
-  local input_file = vim.fn.expand("%:t")
-  local file_dir = vim.fn.expand("%:p:h")
-  local output_pdf = vim.fn.expand("%:t:r") .. ".pdf"
+  local input_file = vim.fn.shellescape(vim.fn.expand("%:t"))
+  local file_dir = vim.fn.shellescape(vim.fn.expand("%:p:h"))
+  local output_pdf = vim.fn.shellescape(vim.fn.expand("%:t:r") .. ".pdf")
 
-  local cmd =
-    'cd "' .. file_dir .. '" && ' ..
-    'pandoc "' .. input_file .. '" ' ..
-    '-o "' .. output_pdf .. '" ' ..
-    '--pdf-engine=xelatex ' ..
-    '--resource-path=. '
+  local command = table.concat({
+    "cd",
+    file_dir,
+    "&&",
+    "pandoc",
+    input_file,
+    "-o",
+    output_pdf,
+    "--pdf-engine=xelatex",
+    "--resource-path=.",
+  }, " ")
 
-  vim.cmd("!" .. cmd)
-
-end, { desc = "Simple Markdown to PDF" })
+  vim.cmd("!" .. command)
+end, {
+  desc = "Export Markdown to PDF",
+})
 
 -------------------------------------------------
 -- Templates
 -------------------------------------------------
 
-keymap.set("n", "<leader>tc", function()
-  local template = vim.fn.expand("~/.config/nvim/templates/cpp.cpp")
+keymap("n", "<leader>tc", function()
+  insert_template(
+    "~/.config/nvim/templates/cpp.cpp",
+    "C++ template inserted"
+  )
+end, {
+  desc = "Insert C++ template",
+})
 
-  if vim.fn.filereadable(template) == 1 then
-    local lines = vim.fn.readfile(template)
-
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
-    print("C++ template inserted")
-  else
-    print("Template not found")
-  end
-end, { desc = "Insert C++ template" })
-
-keymap.set("n", "<leader>tl", function()
+keymap("n", "<leader>tl", function()
   local template = {
     "\\begin{center}",
     "\\includegraphics[width=0.9\\textwidth]{image.png}",
@@ -255,36 +267,54 @@ keymap.set("n", "<leader>tl", function()
   }
 
   vim.api.nvim_put(template, "l", true, true)
-end, { desc = "Insert LaTeX image block" })
+end, {
+  desc = "Insert LaTeX image block",
+})
 
 -------------------------------------------------
 -- Move lines
 -------------------------------------------------
 
-keymap.set("n", "<A-Up>", ":m .-2<CR>==")
-keymap.set("n", "<A-Down>", ":m .+1<CR>==")
+keymap("n", "<A-Up>", "<cmd>move .-2<cr>==", {
+  desc = "Move line up",
+})
 
-keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv")
-keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv")
+keymap("n", "<A-Down>", "<cmd>move .+1<cr>==", {
+  desc = "Move line down",
+})
 
-keymap.set("i", "<A-Up>", "<Esc>:m .-2<CR>==gi")
-keymap.set("i", "<A-Down>", "<Esc>:m .+1<CR>==gi")
+keymap("v", "<A-Up>", ":move '<-2<cr>gv=gv", {
+  desc = "Move selection up",
+})
+
+keymap("v", "<A-Down>", ":move '>+1<cr>gv=gv", {
+  desc = "Move selection down",
+})
+
+keymap("i", "<A-Up>", "<Esc><cmd>move .-2<cr>==gi", {
+  desc = "Move line up",
+})
+
+keymap("i", "<A-Down>", "<Esc><cmd>move .+1<cr>==gi", {
+  desc = "Move line down",
+})
 
 -------------------------------------------------
 -- Dashboard
 -------------------------------------------------
 
-keymap.set("n", "<leader>v", function()
+keymap("n", "<leader>v", function()
   vim.cmd("enew")
   vim.cmd("Dashboard")
-end, { desc = "Go to dashboard" })
-
+end, {
+  desc = "Open dashboard",
+})
 
 -------------------------------------------------
 -- NvimTree
 -------------------------------------------------
 
-vim.keymap.set("n", "<leader>r", function()
+keymap("n", "<leader>e", function()
   local api = require("nvim-tree.api")
 
   if api.tree.is_visible() then
@@ -292,4 +322,6 @@ vim.keymap.set("n", "<leader>r", function()
   else
     api.tree.open()
   end
-end, { desc = "Explorer" })
+end, {
+  desc = "Toggle explorer",
+})

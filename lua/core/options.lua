@@ -11,17 +11,17 @@ opt.relativenumber = true
 -- Indentation
 -------------------------------------------------
 
-opt.tabstop = 2
-opt.shiftwidth = 2
+opt.tabstop = 4
+opt.shiftwidth = 4
 opt.expandtab = true
 opt.smartindent = true
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
   callback = function()
-    vim.bo.tabstop = 2
-    vim.bo.shiftwidth = 2
-    vim.bo.softtabstop = 2
+    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 4
+    vim.bo.softtabstop = 4
     vim.bo.expandtab = true
   end,
 })
@@ -44,7 +44,8 @@ opt.smartcase = true
 -------------------------------------------------
 
 opt.cursorline = true
-opt.cursorlineopt = "number"
+opt.cursorcolumn = false
+opt.cursorlineopt = "both"
 
 -------------------------------------------------
 -- Scroll
@@ -103,6 +104,18 @@ vim.o.timeoutlen = 500
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.fillchars:append({
-  vert = "│",
-})
+-------------------------------------------------
+-- Global window appearance
+-------------------------------------------------
+
+opt.fillchars = {
+    eob = " ",
+    vert = "│",
+    fold = " ",
+    foldopen = "",
+    foldclose = "",
+    foldsep = " ",
+    diff = "╱",
+}
+
+opt.winborder = "rounded"

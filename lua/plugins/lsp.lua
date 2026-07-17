@@ -3,47 +3,176 @@ return {
 
   config = function()
 
+          -------------------------------------------------
+    -- Diagnostics
+    -------------------------------------------------
+
+    local severity = vim.diagnostic.severity
+
+    vim.diagnostic.config({
+        severity_sort = true,
+
+        update_in_insert = false,
+
+        underline = {
+            severity = {
+                min = severity.WARN,
+            },
+        },
+
+        signs = {
+            text = {
+                [severity.ERROR] = "●",
+                [severity.WARN] = "●",
+                [severity.INFO] = "●",
+                [severity.HINT] = "●",
+            },
+        },
+
+        virtual_text = {
+            spacing = 3,
+            source = "if_many",
+            prefix = "●",
+            severity = {
+                min = severity.WARN,
+            },
+        },
+
+        virtual_lines = false,
+
+        float = {
+            border = "rounded",
+            source = "if_many",
+            header = "",
+            prefix = "",
+            focusable = true,
+        },
+    })
+
     -------------------------------------------------
     -- Keymaps cuando LSP se conecta
     -------------------------------------------------
 
     vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(event)
+        callback = function(event)
+            local opts = {
+                buffer = event.buf,
+                silent = true,
+            }
 
-        local opts = { buffer = event.buf }
+            local function map(mode, lhs, rhs, desc)
+                vim.keymap.set(
+                    mode,
+                    lhs,
+                    rhs,
+                    vim.tbl_extend("force", opts, {
+                        desc = desc,
+                    })
+                )
+            end
 
-        -- Go to definition
-        vim.keymap.set("n", "gd",
-          vim.lsp.buf.definition, opts)
+            -------------------------------------------------
+            -- Navigation
+            -------------------------------------------------
 
-        -- Hover
-        vim.keymap.set("n", "K",
-          vim.lsp.buf.hover, opts)
+            map(
+                "n",
+                "gd",
+                vim.lsp.buf.definition,
+                "Go to definition"
+            )
 
-        -- References
-        vim.keymap.set("n", "gr",
-          vim.lsp.buf.references, opts)
+            map(
+                "n",
+                "gr",
+                vim.lsp.buf.references,
+                "Show references"
+            )
 
-        -- Rename
-        vim.keymap.set("n", "<leader>rn",
-          vim.lsp.buf.rename, opts)
+            map(
+                "n",
+                "gD",
+                vim.lsp.buf.declaration,
+                "Go to declaration"
+            )
 
-        -- Diagnostics navigation
-        vim.keymap.set("n", "[d",
-          vim.diagnostic.goto_prev, opts)
+            map(
+                "n",
+                "gi",
+                vim.lsp.buf.implementation,
+                "Go to implementation"
+            )
 
-        vim.keymap.set("n", "]d",
-          vim.diagnostic.goto_next, opts)
+            -------------------------------------------------
+            -- Information
+            -------------------------------------------------
 
-        -- 🔥 VER ERROR EN LÍNEA (muy importante)
-        vim.keymap.set("n", "gl",
-          vim.diagnostic.open_float, opts)
+            map("n", "K", function()
+                vim.lsp.buf.hover({
+                    border = "rounded",
+                    max_width = 80,
+                    max_height = 20,
+                })
+            end, "LSP hover")
 
-        -- 🔥 Lista de errores
-        vim.keymap.set("n", "<leader>e",
-          vim.diagnostic.setloclist, opts)
+            map("i", "<C-k>", function()
+                vim.lsp.buf.signature_help({
+                    border = "rounded",
+                    max_width = 80,
+                    max_height = 15,
+                })
+            end, "Signature help")
 
-      end,
+            -------------------------------------------------
+            -- Code actions
+            -------------------------------------------------
+
+            map(
+                { "n", "v" },
+                "<leader>ca",
+                vim.lsp.buf.code_action,
+                "Code actions"
+            )
+
+            map(
+                "n",
+                "<leader>rn",
+                vim.lsp.buf.rename,
+                "Rename symbol"
+            )
+
+            -------------------------------------------------
+            -- Diagnostics
+            -------------------------------------------------
+
+            map("n", "[d", function()
+                vim.diagnostic.jump({
+                    count = -1,
+                    float = true,
+                })
+            end, "Previous diagnostic")
+
+            map("n", "]d", function()
+                vim.diagnostic.jump({
+                    count = 1,
+                    float = true,
+                })
+            end, "Next diagnostic")
+
+            map("n", "gl", function()
+                vim.diagnostic.open_float({
+                    scope = "cursor",
+                    border = "rounded",
+                    source = "if_many",
+                })
+            end, "Show line diagnostic")
+
+            map("n", "<leader>dl", function()
+                vim.diagnostic.setloclist({
+                    open = true,
+                })
+            end, "Diagnostic list")
+        end,
     })
 
     -------------------------------------------------

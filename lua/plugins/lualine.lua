@@ -1,385 +1,354 @@
 local colors = require("core.colors")
 
-local ok_sys, sys = pcall(require, "core.system")
-
-if ok_sys and sys.setup then
-	sys.setup({ interval_ms = 1500 })
-end
-
 return {
-	"nvim-lualine/lualine.nvim",
-
-	config = function()
-
-		-------------------------------------------------
-		-- Cleaner end of buffer
-		-------------------------------------------------
-
-		vim.opt.fillchars = { eob = " " }
-
-		-------------------------------------------------
-		-- Components
-		-------------------------------------------------
-
-		local mode = {
-			"mode",
-
-			fmt = function(str)
-				return " " .. str
-			end,
-		}
-
-		local filename = {
-			"filename",
-
-			file_status = true,
-
-			path = 1,
-
-			symbols = {
-				modified = "●",
-				readonly = "",
-				unnamed = "[No Name]",
-			},
-		}
-
-		local hide_in_width = function()
-			return vim.fn.winwidth(0) > 100
-		end
-
-		local diagnostics = {
-			"diagnostics",
-
-			sources = { "nvim_diagnostic" },
-
-			sections = {
-				"error",
-				"warn",
-				"info",
-				"hint",
-			},
-
-			symbols = {
-				error = " ",
-				warn = " ",
-				info = " ",
-				hint = "󰌵 ",
-			},
-
-			colored = true,
-			update_in_insert = false,
-			always_visible = false,
-
-			cond = hide_in_width,
-		}
-
-		local diff = {
-			"diff",
-
-			colored = true,
-
-			symbols = {
-				added = " ",
-				modified = " ",
-				removed = " ",
-			},
-
-			cond = hide_in_width,
-		}
-
-		-------------------------------------------------
-		-- Setup
-		-------------------------------------------------
-
-		require("lualine").setup({
-
-			options = {
-
-				icons_enabled = true,
-
-				-------------------------------------------------
-				-- Theme
-				-------------------------------------------------
-
-				theme = {
-
-					normal = {
-						a = {
-							fg = colors.primary,
-							bg = "NONE",
-							gui = "bold",
-						},
-
-						b = {
-							fg = colors.foreground,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.foreground_dark,
-							bg = "NONE",
-						},
-					},
-
-					insert = {
-						a = {
-							fg = colors.success,
-							bg = "NONE",
-							gui = "bold",
-						},
-
-						b = {
-							fg = colors.foreground,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.foreground_dark,
-							bg = "NONE",
-						},
-					},
-
-					visual = {
-						a = {
-							fg = colors.secondary,
-							bg = "NONE",
-							gui = "bold",
-						},
-
-						b = {
-							fg = colors.foreground,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.foreground_dark,
-							bg = "NONE",
-						},
-					},
-
-					replace = {
-						a = {
-							fg = colors.danger,
-							bg = "NONE",
-							gui = "bold",
-						},
-
-						b = {
-							fg = colors.foreground,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.foreground_dark,
-							bg = "NONE",
-						},
-					},
-
-					command = {
-						a = {
-							fg = colors.warning,
-							bg = "NONE",
-							gui = "bold",
-						},
-
-						b = {
-							fg = colors.foreground,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.foreground_dark,
-							bg = "NONE",
-						},
-					},
-
-					inactive = {
-						a = {
-							fg = colors.muted,
-							bg = "NONE",
-						},
-
-						b = {
-							fg = colors.muted,
-							bg = "NONE",
-						},
-
-						c = {
-							fg = colors.muted,
-							bg = "NONE",
-						},
-					},
-				},
-
-				-------------------------------------------------
-				-- Separators
-				-------------------------------------------------
-
-				section_separators = {
-					left = "",
-					right = "",
-				},
-
-				component_separators = {
-					left = "│",
-					right = "│",
-				},
-
-				-------------------------------------------------
-				-- Disabled filetypes
-				-------------------------------------------------
-
-				disabled_filetypes = {
-					"alpha",
-					"dashboard",
-					"neo-tree",
-				},
-
-				always_divide_middle = true,
-				globalstatus = true,
-			},
-
-			-------------------------------------------------
-			-- Active sections
-			-------------------------------------------------
-
-			sections = {
-
-				lualine_a = {
-					mode,
-				},
-
-				lualine_b = {
-					{
-						"branch",
-						icon = "",
-					},
-				},
-
-				lualine_c = {
-					filename,
-				},
-
-				lualine_x = {
-
-					diagnostics,
-					diff,
-
-					-------------------------------------------------
-					-- CPU
-					-------------------------------------------------
-
-					{
-						function()
-
-							if ok_sys then
-								return " " ..
-									sys.cpu():gsub("%%", "%%%%")
-							end
-
-							return ""
-
-						end,
-
-						color = {
-							fg = colors.primary,
-						},
-					},
-
-					-------------------------------------------------
-					-- RAM
-					-------------------------------------------------
-
-					{
-						function()
-
-							if ok_sys then
-								return "󰍛 " ..
-									sys.ram():gsub("%%", "%%%%")
-							end
-
-							return ""
-
-						end,
-
-						color = {
-							fg = colors.secondary,
-						},
-					},
-				},
-
-				lualine_y = {
-
-					{
-						"location",
-						icon = "󰍉",
-					},
-
-					{
-						function()
-							return " " ..
-								os.date("%H:%M")
-						end,
-					},
-				},
-
-				lualine_z = {
-
-					{
-						"progress",
-						icon = "󰦨",
-					},
-				},
-			},
-
-			-------------------------------------------------
-			-- Inactive sections
-			-------------------------------------------------
-
-			inactive_sections = {
-
-				lualine_a = {},
-				lualine_b = {},
-
-				lualine_c = {
-					{
-						"filename",
-						path = 1,
-					},
-				},
-
-				lualine_x = {
-					{
-						"location",
-						padding = 0,
-					},
-				},
-
-				lualine_y = {},
-				lualine_z = {},
-			},
-
-			-------------------------------------------------
-			-- Extensions
-			-------------------------------------------------
-
-			tabline = {},
-
-			extensions = {
-				"fugitive",
-				"neo-tree",
-				"lazy",
-			},
-		})
-
-		-------------------------------------------------
-		-- Transparent statusline
-		-------------------------------------------------
-
-		vim.cmd([[
-			highlight StatusLine guibg=NONE
-			highlight StatusLineNC guibg=NONE
-		]])
-
-	end,
+  "nvim-lualine/lualine.nvim",
+
+  config = function()
+    vim.opt.fillchars = {
+      eob = " ",
+    }
+
+    local mode = {
+      "mode",
+
+      fmt = function(str)
+          local labels = {
+            NORMAL = "▍ NORMAL",
+            INSERT = "▍ INSERT",
+            VISUAL = "▍ VISUAL",
+            ["V-LINE"] = "▍ V-LINE",
+            ["V-BLOCK"] = "▍ V-BLOCK",
+            REPLACE = "▍ REPLACE",
+            COMMAND = "▍ COMMAND",
+            TERMINAL = "▍ TERMINAL",
+          }
+
+          return labels[str] or ("▍ " .. str)
+        end,
+
+      padding = {
+        left = 1,
+        right = 1,
+      },
+    }
+
+    local branch = {
+      "branch",
+      icon = "",
+
+      color = {
+        fg = colors.foreground_soft,
+      },
+
+      padding = {
+        left = 1,
+        right = 1,
+      },
+    }
+
+    local filename = {
+      "filename",
+
+      path = 1,
+      file_status = true,
+
+      symbols = {
+        modified = " ●",
+        readonly = " ",
+        unnamed = "Untitled",
+        newfile = "New",
+      },
+
+      color = {
+        fg = colors.foreground,
+      },
+
+      padding = {
+        left = 1,
+        right = 1,
+      },
+    }
+
+    local filetype = {
+      "filetype",
+
+      icon_only = false,
+      fmt = function(name)
+
+          if name == "" then
+            return ""
+          end
+
+          return name:sub(1, 1):upper() .. name:sub(2)
+        end,
+
+      color = {
+        fg = colors.secondary,
+      },
+
+      padding = {
+        left = 2,
+        right = 2,
+      },
+    }
+
+    local diagnostics = {
+      "diagnostics",
+
+      sources = {
+        "nvim_diagnostic",
+      },
+
+      sections = {
+        "error",
+        "warn",
+      },
+
+      symbols = {
+        error = "● ",
+        warn = "● ",
+      },
+
+      colored = true,
+      update_in_insert = false,
+      always_visible = false,
+
+      cond = function()
+        return vim.fn.winwidth(0) > 110
+      end,
+
+      padding = {
+        left = 1,
+        right = 1,
+      },
+    }
+
+    local location = {
+      "location",
+
+      fmt = function(value)
+        local line, column = value:match("(%d+):(%d+)")
+
+        if not line or not column then
+          return value
+        end
+
+        return string.format("Ln %s  Col %s", line, column)
+      end,
+
+      color = {
+        fg = colors.foreground_soft,
+      },
+
+      padding = {
+        left = 1,
+        right = 1,
+      },
+    }
+
+    require("lualine").setup({
+      options = {
+        icons_enabled = true,
+
+        theme = {
+          normal = {
+            a = {
+              fg = colors.primary,
+              bg = "NONE",
+              gui = "bold",
+            },
+
+            b = {
+              fg = colors.foreground_soft,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.foreground,
+              bg = "NONE",
+            },
+          },
+
+          insert = {
+            a = {
+              fg = colors.success,
+              bg = "NONE",
+              gui = "bold",
+            },
+
+            b = {
+              fg = colors.foreground_soft,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.foreground,
+              bg = "NONE",
+            },
+          },
+
+          visual = {
+            a = {
+              fg = colors.secondary,
+              bg = "NONE",
+              gui = "bold",
+            },
+
+            b = {
+              fg = colors.foreground_soft,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.foreground,
+              bg = "NONE",
+            },
+          },
+
+          replace = {
+            a = {
+              fg = colors.danger,
+              bg = "NONE",
+              gui = "bold",
+            },
+
+            b = {
+              fg = colors.foreground_soft,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.foreground,
+              bg = "NONE",
+            },
+          },
+
+          command = {
+            a = {
+              fg = colors.warning,
+              bg = "NONE",
+              gui = "bold",
+            },
+
+            b = {
+              fg = colors.foreground_soft,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.foreground,
+              bg = "NONE",
+            },
+          },
+
+          inactive = {
+            a = {
+              fg = colors.muted,
+              bg = "NONE",
+            },
+
+            b = {
+              fg = colors.muted,
+              bg = "NONE",
+            },
+
+            c = {
+              fg = colors.muted,
+              bg = "NONE",
+            },
+          },
+        },
+
+        section_separators = {
+          left = "",
+          right = "",
+        },
+
+        component_separators = {
+          left = "",
+          right = "",
+        },
+
+        disabled_filetypes = {
+          statusline = {
+            "dashboard",
+            "alpha",
+            "lazy",
+          },
+        },
+
+        always_divide_middle = true,
+        globalstatus = true,
+
+        refresh = {
+          statusline = 500,
+          tabline = 1000,
+          winbar = 1000,
+        },
+      },
+
+      sections = {
+        lualine_a = {
+          mode,
+        },
+
+        lualine_b = {
+          branch,
+        },
+
+        lualine_c = {
+          filename,
+        },
+
+        lualine_x = {
+          diagnostics,
+          filetype,
+        },
+
+        lualine_y = {},
+
+        lualine_z = {
+          location,
+        },
+      },
+
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+          {
+            "filename",
+
+            path = 1,
+
+            color = {
+              fg = colors.muted,
+            },
+          },
+        },
+
+        lualine_x = {
+          {
+            "location",
+
+            color = {
+              fg = colors.muted,
+            },
+          },
+        },
+
+        lualine_y = {},
+        lualine_z = {},
+      },
+
+      tabline = {},
+
+      extensions = {
+        "fugitive",
+        "lazy",
+        "nvim-tree",
+      },
+    })
+
+  end,
 }

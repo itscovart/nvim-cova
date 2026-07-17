@@ -24,10 +24,6 @@ return {
   config = function(_, opts)
     require("mini.indentscope").setup(opts)
 
-    vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", {
-      fg = "#cba6f7",
-    })
-
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
         "dashboard",
