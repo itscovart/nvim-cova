@@ -6,6 +6,8 @@ using namespace std;
 #define space ' '
 
 typedef long long ll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
 
 void solve(){
   // cursor
