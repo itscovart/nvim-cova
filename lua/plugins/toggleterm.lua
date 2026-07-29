@@ -24,7 +24,7 @@ return {
         return 20
       end,
 
-      open_mapping = [[<C-\>]],
+      open_mapping = [[<C-t>]],
 
       direction = "horizontal",
 
@@ -81,7 +81,7 @@ return {
         vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
         vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
 
-        vim.keymap.set("t", "<C-\\>", [[<Cmd>ToggleTerm<CR>]], opts)
+        vim.keymap.set("t", "<C-t>", [[<Cmd>ToggleTerm<CR>]], opts)
       end,
     })
 
