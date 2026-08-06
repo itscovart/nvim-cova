@@ -1,34 +1,42 @@
 return {
-  "stevearc/conform.nvim",
+	"stevearc/conform.nvim",
 
-  config = function()
+	config = function()
+		local conform = require("conform")
 
-    local conform = require("conform")
+		conform.setup({
 
-    conform.setup({
+			formatters_by_ft = {
 
-      formatters_by_ft = {
+				cpp = { "clang-format" },
+				c = { "clang-format" },
 
-        cpp = { "clang-format" },
-        c = { "clang-format" },
-        python = { "black" },
-        rust = { "rustfmt" },
+				python = { "black" },
 
-      },
+				rust = { "rustfmt" },
 
-    })
+				lua = { "stylua" },
 
-    -------------------------------------------------
-    -- Keymap manual
-    -------------------------------------------------
+				sql = { "sqlfluff" },
 
-    vim.keymap.set("n", "<leader>f",
-      function()
-        conform.format({
-          lsp_fallback = true,
-        })
-      end,
-      { desc = "Format file" })
+				javascript = { "prettier" },
+				typescript = { "prettier" },
+				html = { "prettier" },
+				css = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescriptreact = { "prettier" },
+				json = { "prettier" },
+			},
+		})
 
-  end,
+		-------------------------------------------------
+		-- Keymap manual
+		-------------------------------------------------
+
+		vim.keymap.set("n", "<leader>f", function()
+			conform.format({
+				lsp_fallback = true,
+			})
+		end, { desc = "Format file" })
+	end,
 }
