@@ -1,43 +1,40 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
+	"nvim-treesitter/nvim-treesitter",
 
-  build = ":TSUpdate",
+	build = ":TSUpdate",
 
-  event = { "BufReadPost", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 
-  config = function()
+	config = function()
+		local ok, configs = pcall(require, "nvim-treesitter.configs")
 
-    local ok, configs = pcall(require, "nvim-treesitter.configs")
+		if not ok then
+			return
+		end
 
-    if not ok then
-      return
-    end
+		configs.setup({
 
-    configs.setup({
+			ensure_installed = {
+				"cpp",
+				"c",
+				"python",
+				"lua",
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"tsx",
+				"json",
+				"sql",
+			},
 
-      ensure_installed = {
-        "cpp",
-        "c",
-        "python",
-        "lua",
-        "html",
-        "css",
-        "javascript",
-        "typescript",
-        "tsx",
-        "json",
-        "sql",
-      },
+			highlight = {
+				enable = true,
+			},
 
-      highlight = {
-        enable = true,
-      },
-
-      indent = {
-        enable = true,
-      },
-
-    })
-
-  end,
+			indent = {
+				enable = true,
+			},
+		})
+	end,
 }

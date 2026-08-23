@@ -1,31 +1,31 @@
 return {
-  "folke/which-key.nvim",
+	"folke/which-key.nvim",
 
-  event = "VeryLazy",
+	event = "VeryLazy",
 
-  opts = {
-    preset = "modern",
+	opts = {
+		preset = "modern",
 
-    delay = 300,
+		delay = 300,
 
-    icons = {
-      mappings = true,
-    },
+		icons = {
+			mappings = true,
+		},
 
-    win = {
-      border = "rounded",
-      padding = { 1, 2 },
-    },
+		win = {
+			border = "rounded",
+			padding = { 1, 2 },
+		},
 
-    layout = {
-      spacing = 6,
-    },
+		layout = {
+			spacing = 6,
+		},
 
-    sort = {
-      "local",
-      "order",
-      "group",
-      "alphanum",
-    },
-  },
+		sort = {
+			"local",
+			"order",
+			"group",
+			"alphanum",
+		},
+	},
 }

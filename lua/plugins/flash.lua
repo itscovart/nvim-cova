@@ -1,25 +1,19 @@
 return {
-  "folke/flash.nvim",
+	"folke/flash.nvim",
 
-  event = "VeryLazy",
+	event = "VeryLazy",
 
-  opts = {},
+	opts = {},
 
-  config = function()
+	config = function()
+		local flash = require("flash")
 
-    local flash = require("flash")
+		vim.keymap.set({ "n", "x", "o" }, "s", function()
+			flash.jump()
+		end, { desc = "Flash jump" })
 
-    vim.keymap.set({ "n", "x", "o" }, "s",
-      function()
-        flash.jump()
-      end,
-      { desc = "Flash jump" })
-
-    vim.keymap.set({ "n", "x", "o" }, "S",
-      function()
-        flash.treesitter()
-      end,
-      { desc = "Flash treesitter" })
-
-  end,
+		vim.keymap.set({ "n", "x", "o" }, "S", function()
+			flash.treesitter()
+		end, { desc = "Flash treesitter" })
+	end,
 }

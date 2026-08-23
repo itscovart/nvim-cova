@@ -1,43 +1,43 @@
 return {
-  "echasnovski/mini.indentscope",
-  version = false,
+	"echasnovski/mini.indentscope",
+	version = false,
 
-  opts = {
-    symbol = "▏",
+	opts = {
+		symbol = "▏",
 
-    options = {
-      try_as_border = true,
-    },
+		options = {
+			try_as_border = true,
+		},
 
-    draw = {
-      delay = 0,
-    },
+		draw = {
+			delay = 0,
+		},
 
-    mappings = {
-      object_scope = "ii",
-      object_scope_with_border = "ai",
-    },
+		mappings = {
+			object_scope = "ii",
+			object_scope_with_border = "ai",
+		},
 
-    symbol = "▏",
-  },
+		symbol = "▏",
+	},
 
-  config = function(_, opts)
-    require("mini.indentscope").setup(opts)
+	config = function(_, opts)
+		require("mini.indentscope").setup(opts)
 
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = {
-        "dashboard",
-        "alpha",
-        "starter",
-        "lazy",
-        "mason",
-        "help",
-        "notify",
-      },
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"dashboard",
+				"alpha",
+				"starter",
+				"lazy",
+				"mason",
+				"help",
+				"notify",
+			},
 
-      callback = function()
-        vim.b.miniindentscope_disable = true
-      end,
-    })
-  end,
+			callback = function()
+				vim.b.miniindentscope_disable = true
+			end,
+		})
+	end,
 }

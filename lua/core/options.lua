@@ -17,13 +17,13 @@ opt.expandtab = true
 opt.smartindent = true
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.bo.tabstop = 4
-    vim.bo.shiftwidth = 4
-    vim.bo.softtabstop = 4
-    vim.bo.expandtab = true
-  end,
+	pattern = "*",
+	callback = function()
+		vim.bo.tabstop = 4
+		vim.bo.shiftwidth = 4
+		vim.bo.softtabstop = 4
+		vim.bo.expandtab = true
+	end,
 })
 
 -------------------------------------------------
@@ -109,13 +109,13 @@ vim.g.loaded_netrwPlugin = 1
 -------------------------------------------------
 
 opt.fillchars = {
-    eob = " ",
-    vert = "│",
-    fold = " ",
-    foldopen = "",
-    foldclose = "",
-    foldsep = " ",
-    diff = "╱",
+	eob = " ",
+	vert = "│",
+	fold = " ",
+	foldopen = "",
+	foldclose = "",
+	foldsep = " ",
+	diff = "╱",
 }
 
 opt.winborder = "rounded"

@@ -1,67 +1,66 @@
 local colors = require("core.colors")
 
 return {
-    "nvim-tree/nvim-tree.lua",
+	"nvim-tree/nvim-tree.lua",
 
-    dependencies = {
-        "nvim-tree/nvim-web-devicons",
-    },
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
 
-    config = function()
-        require("nvim-tree").setup({
-            -------------------------------------------------
-            -- View
-            -------------------------------------------------
+	config = function()
+		require("nvim-tree").setup({
+			-------------------------------------------------
+			-- View
+			-------------------------------------------------
 
-            view = {
-                width = 34,
-                relativenumber = true,
-                signcolumn = "no",
-            },
+			view = {
+				width = 34,
+				relativenumber = true,
+				signcolumn = "no",
+			},
 
-            -------------------------------------------------
-            -- Renderer
-            -------------------------------------------------
+			-------------------------------------------------
+			-- Renderer
+			-------------------------------------------------
 
-            renderer = {
-                group_empty = true,
+			renderer = {
+				group_empty = true,
 
-                root_folder_label = false,
+				root_folder_label = false,
 
-                highlight_opened_files = "name",
+				highlight_opened_files = "name",
 
-                indent_markers = {
-                    enable = false,
-                },
+				indent_markers = {
+					enable = false,
+				},
 
-                icons = {
-                    show = {
-                        folder_arrow = false,
-                    },
-                },
-            },
+				icons = {
+					show = {
+						folder_arrow = false,
+					},
+				},
+			},
 
-            -------------------------------------------------
-            -- Behavior
-            -------------------------------------------------
+			-------------------------------------------------
+			-- Behavior
+			-------------------------------------------------
 
-            update_focused_file = {
-                enable = true,
-                update_root = false,
-            },
+			update_focused_file = {
+				enable = true,
+				update_root = false,
+			},
 
-            filters = {
-                enable = false,
-            },
+			filters = {
+				enable = false,
+			},
 
-            git = {
-                ignore = false,
-            },
-        })
+			git = {
+				ignore = false,
+			},
+		})
 
-        -------------------------------------------------
-        -- Highlights
-        -------------------------------------------------
-
-    end,
+		-------------------------------------------------
+		-- Highlights
+		-------------------------------------------------
+	end,
 }

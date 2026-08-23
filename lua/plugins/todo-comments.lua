@@ -1,204 +1,204 @@
 local colors = require("core.colors")
 
 return {
-  "folke/todo-comments.nvim",
+	"folke/todo-comments.nvim",
 
-  event = "VeryLazy",
+	event = "VeryLazy",
 
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+	},
 
-  opts = {
+	opts = {
 
-    -------------------------------------------------
-    -- Signs
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Signs
+		-------------------------------------------------
 
-    signs = true,
+		signs = true,
 
-    sign_priority = 8,
+		sign_priority = 8,
 
-    -------------------------------------------------
-    -- Keywords
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Keywords
+		-------------------------------------------------
 
-    keywords = {
+		keywords = {
 
-      TODO = {
-        icon = " ",
-        color = "info",
-        alt = { "TODO" },
-      },
+			TODO = {
+				icon = " ",
+				color = "info",
+				alt = { "TODO" },
+			},
 
-      FIXME = {
-        icon = " ",
-        color = "error",
-        alt = {
-          "FIX",
-          "BUG",
-          "FIXIT",
-          "ISSUE",
-        },
-      },
+			FIXME = {
+				icon = " ",
+				color = "error",
+				alt = {
+					"FIX",
+					"BUG",
+					"FIXIT",
+					"ISSUE",
+				},
+			},
 
-      HACK = {
-        icon = " ",
-        color = "warning",
-      },
+			HACK = {
+				icon = " ",
+				color = "warning",
+			},
 
-      WARN = {
-        icon = " ",
-        color = "warning",
+			WARN = {
+				icon = " ",
+				color = "warning",
 
-        alt = {
-          "WARNING",
-          "XXX",
-        },
-      },
+				alt = {
+					"WARNING",
+					"XXX",
+				},
+			},
 
-      PERF = {
-        icon = " ",
-        color = "default",
+			PERF = {
+				icon = " ",
+				color = "default",
 
-        alt = {
-          "OPTIM",
-          "PERFORMANCE",
-          "OPTIMIZE",
-        },
-      },
+				alt = {
+					"OPTIM",
+					"PERFORMANCE",
+					"OPTIMIZE",
+				},
+			},
 
-      NOTE = {
-        icon = " ",
-        color = "hint",
+			NOTE = {
+				icon = " ",
+				color = "hint",
 
-        alt = {
-          "INFO",
-        },
-      },
-    },
+				alt = {
+					"INFO",
+				},
+			},
+		},
 
-    -------------------------------------------------
-    -- Style
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Style
+		-------------------------------------------------
 
-    gui_style = {
-      fg = "NONE",
-      bg = "BOLD",
-    },
+		gui_style = {
+			fg = "NONE",
+			bg = "BOLD",
+		},
 
-    -------------------------------------------------
-    -- Highlight
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Highlight
+		-------------------------------------------------
 
-    highlight = {
+		highlight = {
 
-      multiline = true,
+			multiline = true,
 
-      multiline_pattern = "^.",
+			multiline_pattern = "^.",
 
-      multiline_context = 10,
+			multiline_context = 10,
 
-      before = "",
+			before = "",
 
-      keyword = "bg",
+			keyword = "bg",
 
-      after = "fg",
+			after = "fg",
 
-      pattern = [[.*<(KEYWORDS)\s*:]],
+			pattern = [[.*<(KEYWORDS)\s*:]],
 
-      comments_only = true,
+			comments_only = true,
 
-      max_line_len = 400,
+			max_line_len = 400,
 
-      exclude = {},
-    },
+			exclude = {},
+		},
 
-    -------------------------------------------------
-    -- Colors
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Colors
+		-------------------------------------------------
 
-    colors = {
+		colors = {
 
-      error = {
-        colors.danger,
-      },
+			error = {
+				colors.danger,
+			},
 
-      warning = {
-        colors.warning,
-      },
+			warning = {
+				colors.warning,
+			},
 
-      info = {
-        colors.primary,
-      },
+			info = {
+				colors.primary,
+			},
 
-      hint = {
-        colors.accent,
-      },
+			hint = {
+				colors.accent,
+			},
 
-      default = {
-        colors.success,
-      },
-    },
+			default = {
+				colors.success,
+			},
+		},
 
-    -------------------------------------------------
-    -- Search
-    -------------------------------------------------
+		-------------------------------------------------
+		-- Search
+		-------------------------------------------------
 
-    search = {
+		search = {
 
-      command = "rg",
+			command = "rg",
 
-      args = {
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-      },
+			args = {
+				"--color=never",
+				"--no-heading",
+				"--with-filename",
+				"--line-number",
+				"--column",
+			},
 
-      pattern = [[\b(KEYWORDS):]],
-    },
-  },
+			pattern = [[\b(KEYWORDS):]],
+		},
+	},
 
-  -------------------------------------------------
-  -- Keymaps
-  -------------------------------------------------
+	-------------------------------------------------
+	-- Keymaps
+	-------------------------------------------------
 
-  keys = {
+	keys = {
 
-    {
-      "]t",
+		{
+			"]t",
 
-      function()
-        require("todo-comments").jump_next()
-      end,
+			function()
+				require("todo-comments").jump_next()
+			end,
 
-      desc = "Next todo comment",
-    },
+			desc = "Next todo comment",
+		},
 
-    {
-      "[t",
+		{
+			"[t",
 
-      function()
-        require("todo-comments").jump_prev()
-      end,
+			function()
+				require("todo-comments").jump_prev()
+			end,
 
-      desc = "Previous todo comment",
-    },
+			desc = "Previous todo comment",
+		},
 
-    {
-      "<leader>st",
-      "<cmd>TodoTelescope<cr>",
+		{
+			"<leader>st",
+			"<cmd>TodoTelescope<cr>",
 
-      desc = "Todo Telescope",
-    },
+			desc = "Todo Telescope",
+		},
 
-    {
-      "<leader>sq",
-      "<cmd>TodoQuickFix<cr>",
+		{
+			"<leader>sq",
+			"<cmd>TodoQuickFix<cr>",
 
-      desc = "Todo QuickFix",
-    },
-  },
+			desc = "Todo QuickFix",
+		},
+	},
 }
