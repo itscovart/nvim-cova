@@ -47,7 +47,7 @@ function M.setup()
 	})
 
 	vim.api.nvim_set_hl(0, "Search", {
-		fg = colors.bg,
+		fg = colors.foreground,
 		bg = colors.accent,
 		bold = true,
 	})
@@ -346,6 +346,16 @@ function M.setup()
 		bg = colors.surface,
 	})
 
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", {
+        undercurl = true,
+        sp = colors.info,
+    })
+
+    vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
+        undercurl = true,
+        sp = colors.hint,
+    })
+
 	-------------------------------------------------
 	-- Blink completion
 	-------------------------------------------------
@@ -526,7 +536,7 @@ function M.setup()
 	})
 
 	vim.api.nvim_set_hl(0, "TroubleSource", {
-		fg = colors.comment,
+		fg = colors.muted,
 	})
 
 	vim.api.nvim_set_hl(0, "TroubleDirectory", {
@@ -545,6 +555,11 @@ function M.setup()
 	vim.api.nvim_set_hl(0, "TroubleIconFolder", {
 		fg = colors.secondary,
 	})
+
+    vim.api.nvim_set_hl(0, "Cursor", {
+        fg = colors.bg,
+        bg = colors.primary,
+    })
 end
 
 return M

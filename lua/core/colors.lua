@@ -2,43 +2,44 @@ local M = {}
 
 -- ============================================
 -- PROJECT PANTHER — COLOR SYSTEM
+-- Warm Light / Solid Syntax
 -- ============================================
 
 -- Base
-M.bg = "#0D1117"
-M.bg_alt = "#11161D"
-M.surface = "#161B22"
-M.surface_alt = "#1F2937"
+M.bg = "#F3EBDD"
+M.bg_alt = "#EDE3D3"
+M.surface = "#F8F1E6"
+M.surface_alt = "#E4D8C5"
 
 -- Foreground
-M.foreground = "#D1D5DB"
-M.foreground_soft = "#AAB2BF"
-M.foreground_dark = "#7D8794"
-M.muted = "#4B5563"
+M.foreground = "#302B24"
+M.foreground_soft = "#554D43"
+M.foreground_dark = "#81776A"
+M.muted = "#A69A8A"
 
 -- Brand
-M.primary = "#4F83CC"
-M.secondary = "#6CA6C1"
-M.accent = "#8FB8D8"
+M.primary = "#6946A5"       -- Deep purple
+M.secondary = "#28786D"     -- Deep teal
+M.accent = "#B04478"        -- Deep rose
 
 -- Semantic
-M.success = "#6FA58A"
-M.warning = "#B3A36A"
-M.danger = "#B86F73"
-M.info = "#6CA6C1"
-M.hint = "#7D8794"
+M.success = "#4F8A5B"
+M.warning = "#9A681F"
+M.danger = "#B34D59"
+M.info = "#356A8A"
+M.hint = "#7950A8"
 
 -- Git
-M.git_add = "#6FA58A"
-M.git_change = "#6CA6C1"
-M.git_delete = "#B86F73"
+M.git_add = "#4F8A5B"
+M.git_change = "#356A8A"
+M.git_delete = "#B34D59"
 
 -- Selection
-M.selection = "#1B2735"
-M.cursorline = "#111821"
+M.selection = "#E5D8F2"
+M.cursorline = "#E8DDC9"
 
 -- Borders
-M.border = "#2A3645"
-M.border_active = "#4F83CC"
+M.border = "#D2C5B4"
+M.border_active = "#6946A5"
 
 return M

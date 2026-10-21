@@ -2,47 +2,65 @@ local colors = require("core.colors")
 
 return {
 	{
-		"rebelot/kanagawa.nvim",
+		"danfry1/lume",
+
+		lazy = false,
 		priority = 1000,
 
 		config = function()
-			require("kanagawa").setup({
-				theme = "dragon",
+			require("lume").setup({
 				transparent = false,
-				dimInactive = false,
-				terminalColors = true,
+				italics = true,
 
-				colors = {
-					theme = {
-						all = {
-							ui = {
-								bg = colors.bg,
-								bg_gutter = "none",
-								float = colors.surface,
-							},
-						},
+				palette_overrides = {
+					backgrounds = {
+						crust = colors.bg,
+						mantle = colors.bg_alt,
+						base = colors.bg,
+						surface0 = colors.surface,
+						surface1 = colors.surface_alt,
+					},
+
+					foregrounds = {
+						text = colors.foreground,
+						subtext = colors.foreground_soft,
+						overlay = colors.foreground_dark,
+						comment = colors.muted,
+					},
+
+					accents = {
+						lavender = colors.primary,
+						rose = colors.accent,
+						peach = colors.info,
+						sage = colors.secondary,
+						sky = colors.info,
+						teal = colors.secondary,
+						ember = colors.danger,
+						honey = colors.warning,
 					},
 				},
 
-				overrides = function()
+				custom_highlights = function(lume_colors)
 					return {
-						-- Main editor
+						-- ============================================
+						-- EDITOR
+						-- ============================================
+
 						Normal = {
 							fg = colors.foreground,
-							bg = "NONE",
+							bg = colors.bg,
 						},
 
 						NormalNC = {
 							fg = colors.foreground_soft,
-							bg = "NONE",
+							bg = colors.bg,
 						},
 
 						EndOfBuffer = {
 							fg = colors.bg,
-							bg = "NONE",
+							bg = colors.bg,
 						},
 
-						-- Cursor
 						CursorLine = {
 							bg = colors.cursorline,
 						},
@@ -55,7 +73,10 @@ return {
 							bg = colors.surface,
 						},
 
-						-- Numbers
+						-- ============================================
+						-- NUMERACIÓN
+						-- ============================================
+
 						LineNr = {
 							fg = colors.muted,
 						},
@@ -65,7 +86,10 @@ return {
 							bold = true,
 						},
 
-						-- Selection
+						-- ============================================
+						-- SELECCIÓN / SEARCH
+						-- ============================================
+
 						Visual = {
 							bg = colors.selection,
 						},
@@ -82,7 +106,10 @@ return {
 							bold = true,
 						},
 
-						-- Floating windows
+						-- ============================================
+						-- FLOATING WINDOWS
+						-- ============================================
+
 						NormalFloat = {
 							fg = colors.foreground,
 							bg = colors.surface,
@@ -99,7 +126,10 @@ return {
 							bold = true,
 						},
 
-						-- Popup menu
+						-- ============================================
+						-- POPUP MENU
+						-- ============================================
+
 						Pmenu = {
 							fg = colors.foreground,
 							bg = colors.surface,
@@ -119,13 +149,19 @@ return {
 							bg = colors.muted,
 						},
 
-						-- Splits
+						-- ============================================
+						-- SPLITS
+						-- ============================================
+
 						WinSeparator = {
 							fg = colors.border,
 							bg = "NONE",
 						},
 
-						-- Statusline
+						-- ============================================
+						-- STATUSLINE
+						-- ============================================
+
 						StatusLine = {
 							fg = colors.foreground_soft,
 							bg = "NONE",
@@ -136,7 +172,10 @@ return {
 							bg = "NONE",
 						},
 
-						-- Diagnostics
+						-- ============================================
+						-- DIAGNÓSTICOS
+						-- ============================================
+
 						DiagnosticError = {
 							fg = colors.danger,
 						},
@@ -173,7 +212,10 @@ return {
 							sp = colors.hint,
 						},
 
-						-- Git
+						-- ============================================
+						-- GIT
+						-- ============================================
+
 						GitSignsAdd = {
 							fg = colors.git_add,
 						},
@@ -186,16 +228,180 @@ return {
 							fg = colors.git_delete,
 						},
 
-						-- Comments
+						-- ============================================
+						-- COMENTARIOS
+						-- ============================================
+
 						Comment = {
 							fg = colors.foreground_dark,
 							italic = true,
+						},
+
+						-- ============================================
+						-- TREESITTER — PANTHER
+						-- ============================================
+
+						["@keyword"] = {
+							fg = colors.primary,
+							bold = true,
+						},
+
+						["@keyword.function"] = {
+							fg = colors.primary,
+							bold = true,
+						},
+
+						["@keyword.return"] = {
+							fg = colors.primary,
+							bold = true,
+						},
+
+						["@keyword.import"] = {
+							fg = colors.primary,
+							bold = true,
+						},
+
+						["@keyword.operator"] = {
+							fg = colors.primary,
+						},
+
+						["@function"] = {
+							fg = colors.accent,
+						},
+
+						["@function.call"] = {
+							fg = colors.accent,
+						},
+
+						["@function.builtin"] = {
+							fg = colors.accent,
+						},
+
+						["@method"] = {
+							fg = colors.accent,
+						},
+
+						["@method.call"] = {
+							fg = colors.accent,
+						},
+
+						["@string"] = {
+							fg = colors.secondary,
+						},
+
+						["@string.escape"] = {
+							fg = colors.accent,
+						},
+
+						["@type"] = {
+							fg = colors.info,
+						},
+
+						["@type.builtin"] = {
+							fg = colors.info,
+						},
+
+						["@constructor"] = {
+							fg = colors.info,
+							bold = true,
+						},
+
+						["@class"] = {
+							fg = colors.info,
+							bold = true,
+						},
+
+						["@number"] = {
+							fg = colors.warning,
+						},
+
+						["@boolean"] = {
+							fg = colors.primary,
+							bold = true,
+						},
+
+						["@constant"] = {
+							fg = colors.hint,
+						},
+
+						["@constant.builtin"] = {
+							fg = colors.hint,
+						},
+
+						["@variable"] = {
+							fg = colors.foreground,
+						},
+
+						["@variable.builtin"] = {
+							fg = colors.primary,
+						},
+
+						["@parameter"] = {
+							fg = colors.foreground_soft,
+						},
+
+						["@operator"] = {
+							fg = colors.accent,
+						},
+
+						["@property"] = {
+							fg = colors.secondary,
+						},
+
+						["@field"] = {
+							fg = colors.secondary,
+						},
+
+						["@module"] = {
+							fg = colors.info,
+						},
+
+						["@namespace"] = {
+							fg = colors.info,
+						},
+
+						["@punctuation.bracket"] = {
+							fg = colors.foreground_soft,
+						},
+
+						["@punctuation.delimiter"] = {
+							fg = colors.foreground_dark,
+						},
+
+						-- ============================================
+						-- LSP REFERENCES
+						-- ============================================
+
+						LspReferenceText = {
+							bg = colors.selection,
+						},
+
+						LspReferenceRead = {
+							bg = colors.selection,
+						},
+
+						LspReferenceWrite = {
+							bg = colors.selection,
+						},
+
+						-- ============================================
+						-- FOLDING
+						-- ============================================
+
+						Folded = {
+							fg = colors.foreground_dark,
+							bg = colors.surface,
+						},
+
+						FoldColumn = {
+							fg = colors.muted,
+							bg = colors.bg,
 						},
 					}
 				end,
 			})
 
-			vim.cmd.colorscheme("kanagawa-dragon")
+			vim.cmd.colorscheme("lume")
 		end,
 	},
 }
