@@ -245,16 +245,10 @@ end, {
 	desc = "Insert C++ template",
 })
 
-keymap("n", "<leader>tl", function()
-	local template = {
-		"\\begin{center}",
-		"\\includegraphics[width=0.9\\textwidth]{image.png}",
-		"\\end{center}",
-	}
-
-	vim.api.nvim_put(template, "l", true, true)
+keymap("n", "<leader>lt", function()
+	insert_template("~/.config/nvim/templates/base.tex", "LateX template inserted")
 end, {
-	desc = "Insert LaTeX image block",
+	desc = "Insert LateX base template",
 })
 
 -------------------------------------------------
@@ -323,3 +317,70 @@ vim.keymap.set("v", "<leader>cs", "<cmd>CodeSnap<CR>", {
 vim.keymap.set("v", "<leader>css", "<cmd>CodeSnapSave<CR>", {
 	desc = "CodeSnap Save",
 })
+
+-------------------------------------------------
+-- LaTeX / VimTeX
+-------------------------------------------------
+
+local function vimtex_only(fn)
+	return function()
+		if vim.bo.filetype == "tex" then
+			fn()
+		end
+	end
+end
+
+vim.keymap.set(
+	"n",
+	"<leader>ll",
+	vimtex_only(function()
+		vim.cmd("VimtexCompile")
+	end),
+	{
+		desc = "LaTeX compile",
+	}
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>lv",
+	vimtex_only(function()
+		vim.cmd("VimtexView")
+	end),
+	{
+		desc = "LaTeX view PDF",
+	}
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>li",
+	vimtex_only(function()
+		vim.cmd("VimtexInfo")
+	end),
+	{
+		desc = "LaTeX info",
+	}
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>lc",
+	vimtex_only(function()
+		vim.cmd("VimtexClean")
+	end),
+	{
+		desc = "LaTeX clean",
+	}
+)
+
+vim.keymap.set(
+	"n",
+	"<leader>le",
+	vimtex_only(function()
+		vim.cmd("VimtexErrors")
+	end),
+	{
+		desc = "LaTeX errors",
+	}
+)

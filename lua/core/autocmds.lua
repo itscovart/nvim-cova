@@ -60,3 +60,12 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "FocusLost" }, {
 		end)
 	end,
 })
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "VimtexEventCompileSuccess",
+	callback = function()
+		vim.fn.system(
+			"osascript -e 'tell application \"Skim\" to revert front document'"
+		)
+	end,
+})

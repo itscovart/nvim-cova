@@ -23,4 +23,5 @@ return require("lazy").setup({
 	require("plugins.trouble"),
 	require("plugins.which-key"),
 	require("plugins.codesnap"),
+    require("plugins.vimtex"),
 })

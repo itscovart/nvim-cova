@@ -119,3 +119,10 @@ opt.fillchars = {
 }
 
 opt.winborder = "rounded"
+
+opt.guicursor = {
+    "n-v-c:block-Cursor",
+    "i-ci-ve:ver25-Cursor",
+    "r-cr:hor20-Cursor",
+    "o:hor20-Cursor",
+}

@@ -249,5 +249,28 @@ return {
 		})
 
 		vim.lsp.enable("emmet_ls")
+
+		-------------------------------------------------
+		-- LaTeX
+		-------------------------------------------------
+
+		vim.lsp.config("texlab", {
+			settings = {
+				texlab = {
+					build = {
+						onSave = false,
+					},
+
+					chktex = {
+						onOpenAndSave = true,
+						onEdit = false,
+					},
+
+					diagnosticsDelay = 300,
+				},
+			},
+		})
+
+		vim.lsp.enable("texlab")
 	end,
 }
