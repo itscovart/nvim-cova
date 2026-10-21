@@ -346,6 +346,7 @@ return {
 				"fugitive",
 				"lazy",
 				"nvim-tree",
+                "oil",
 			},
 		})
 	end,

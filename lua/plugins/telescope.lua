@@ -156,12 +156,7 @@ return {
 		-- Keymaps
 		-------------------------------------------------
 
-		vim.keymap.set("n", "<leader>ff", function()
-			builtin.find_files({
-				hidden = true,
-				previewer = true,
-			})
-		end, {
+		vim.keymap.set("n", "<leader>ff", builtin.find_files, {
 			desc = "Find files",
 		})
 
@@ -177,6 +172,9 @@ return {
 			desc = "Help tags",
 		})
 
-		vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+        vim.keymap.set("n", "<leader>fr", builtin.oldfiles, {
+            desc = "Recent files",
+        })
+
 	end,
 }
