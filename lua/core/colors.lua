@@ -1,45 +1,59 @@
 local M = {}
 
 -- ============================================
--- PROJECT PANTHER — COLOR SYSTEM
--- Warm Light / Solid Syntax
+-- PROJECT PANTHER — HOMEBREW
+-- Black / Neon Green / Pastel Syntax
 -- ============================================
 
 -- Base
-M.bg = "#F3EBDD"
-M.bg_alt = "#EDE3D3"
-M.surface = "#F8F1E6"
-M.surface_alt = "#E4D8C5"
+M.bg = "#000000"
+M.bg_alt = "#080D08"
+M.surface = "#0B110B"
+M.surface_alt = "#111A11"
 
 -- Foreground
-M.foreground = "#302B24"
-M.foreground_soft = "#554D43"
-M.foreground_dark = "#81776A"
-M.muted = "#A69A8A"
+M.foreground = "#28FE14"
+M.foreground_soft = "#A8C9A3"
+M.foreground_dark = "#789078"
+M.muted = "#526652"
 
 -- Brand
-M.primary = "#6946A5"       -- Deep purple
-M.secondary = "#28786D"     -- Deep teal
-M.accent = "#B04478"        -- Deep rose
+M.primary = "#38FE27"
+M.secondary = "#A8E6CF"
+M.accent = "#CDB4DB"
+
+-- Syntax
+M.variable = "#A8E6CF"
+M.function_color = "#A9DEF9"
+M.string = "#FDFFB6"
+M.keyword = "#CDB4DB"
+M.type = "#BDE0FE"
+M.constant = "#FFD6A5"
+M.number = "#FFD6A5"
+M.operator = "#FFB7C5"
+M.property = "#B7E4C7"
+M.parameter = "#A9DEF9"
+M.comment = "#789078"
 
 -- Semantic
-M.success = "#4F8A5B"
-M.warning = "#9A681F"
-M.danger = "#B34D59"
-M.info = "#356A8A"
-M.hint = "#7950A8"
+M.success = "#A8E6CF"
+M.warning = "#FFD6A5"
+M.danger = "#FF8A9A"
+M.info = "#A9DEF9"
+M.hint = "#CDB4DB"
 
 -- Git
-M.git_add = "#4F8A5B"
-M.git_change = "#356A8A"
-M.git_delete = "#B34D59"
+M.git_add = "#A8E6CF"
+M.git_change = "#A9DEF9"
+M.git_delete = "#FF8A9A"
 
 -- Selection
-M.selection = "#E5D8F2"
-M.cursorline = "#E8DDC9"
+M.selection = "#193019"
+M.cursorline = "#0C160C"
 
 -- Borders
-M.border = "#D2C5B4"
-M.border_active = "#6946A5"
+M.border = "#263626"
+M.border_active = "#38FE27"
 
 return M
+

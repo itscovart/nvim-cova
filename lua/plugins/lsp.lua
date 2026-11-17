@@ -54,6 +54,13 @@ return {
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(event)
+				-- Desactivar semantic tokens únicamente para Python
+				local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+				if client and vim.bo[event.buf].filetype == "python" then
+					client.server_capabilities.semanticTokensProvider = nil
+				end
+
 				local opts = {
 					buffer = event.buf,
 					silent = true,
