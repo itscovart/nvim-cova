@@ -1,5 +1,3 @@
-local colors = require("core.colors")
-
 return {
 	"nvimdev/dashboard-nvim",
 
@@ -10,12 +8,35 @@ return {
 	},
 
 	config = function()
-		local db = require("dashboard")
+		local dashboard = require("dashboard")
+		local version = vim.version()
 
-		db.setup({
+		-------------------------------------------------
+		-- HIGHLIGHTS
+		-------------------------------------------------
+
+		local highlights = {
+			DashboardHeader = "Title",
+			DashboardCenter = "Normal",
+			DashboardShortCut = "Function",
+			DashboardFooter = "Comment",
+		}
+
+		for group, link in pairs(highlights) do
+			vim.api.nvim_set_hl(0, group, {
+				link = link,
+			})
+		end
+
+		-------------------------------------------------
+		-- DASHBOARD
+		-------------------------------------------------
+
+		dashboard.setup({
 			theme = "doom",
 
 			config = {
+
 				-------------------------------------------------
 				-- HEADER
 				-------------------------------------------------
@@ -23,11 +44,16 @@ return {
 				header = {
 					"",
 					"",
+					"██████╗  █████╗ ███╗   ██╗████████╗██╗  ██╗███████╗██████╗",
+					"██╔══██╗██╔══██╗████╗  ██║╚══██╔══╝██║  ██║██╔════╝██╔══██╗",
+					"██████╔╝███████║██╔██╗ ██║   ██║   ███████║█████╗  ██████╔╝",
+					"██╔═══╝ ██╔══██║██║╚██╗██║   ██║   ██╔══██║██╔══╝  ██╔══██╗",
+					"██║     ██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗██║  ██║",
+					"╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝",
 					"",
-					"P R O J E C T   P A N T H E R",
+					"ENGINEERING  /  DEVELOPMENT  /  RESEARCH",
 					"",
-					"Silent tools for focused work.",
-					"",
+					"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
 					"",
 				},
 
@@ -37,38 +63,52 @@ return {
 
 				center = {
 					{
-						icon = "  ",
+						icon = "󰝒  ",
 						desc = "New File",
-						action = "ene | startinsert",
 						key = "n",
+						action = "ene | startinsert",
 					},
-
 					{
-						icon = "  ",
+						icon = "󰱼  ",
 						desc = "Find File",
-						action = "Telescope find_files",
 						key = "f",
+						action = "Telescope find_files",
 					},
-
 					{
-						icon = "  ",
+						icon = "󰈞  ",
+						desc = "Live Grep",
+						key = "g",
+						action = "Telescope live_grep",
+					},
+					{
+						icon = "󰋚  ",
 						desc = "Recent Files",
-						action = "Telescope oldfiles",
 						key = "r",
+						action = "Telescope oldfiles",
 					},
-
 					{
-						icon = "  ",
+						icon = "󰉋  ",
 						desc = "Projects",
-						action = "Telescope find_files cwd=~/Documents/Coding",
 						key = "p",
+						action = "Telescope find_files cwd=~/Documents/Coding",
 					},
-
+					{
+						icon = "󰒲  ",
+						desc = "Neovim Configuration",
+						key = "c",
+						action = "edit ~/.config/nvim/init.lua",
+					},
+					{
+						icon = "󰏖  ",
+						desc = "Plugin Manager",
+						key = "l",
+						action = "Lazy",
+					},
 					{
 						icon = "󰗼  ",
 						desc = "Quit",
-						action = "qa",
 						key = "q",
+						action = "qa",
 					},
 				},
 
@@ -76,11 +116,24 @@ return {
 				-- FOOTER
 				-------------------------------------------------
 
-				footer = {
-					"",
-					"",
-					"Build quietly.",
-				},
+				footer = function()
+					return {
+						"",
+						"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+						"",
+						"BUILD QUIETLY. THINK DEEPLY.",
+						"",
+						os.date("%A, %d %B %Y"),
+						"",
+						string.format(
+							"NEOVIM %d.%d.%d  /  READY",
+							version.major,
+							version.minor,
+							version.patch
+						),
+						"",
+					}
+				end,
 			},
 		})
 	end,
